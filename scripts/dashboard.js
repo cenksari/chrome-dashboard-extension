@@ -50,6 +50,14 @@ $(document).ready(function () {
             isMenuOpened = true;
         }
     });
+
+    $("section,footer").click(function (e) {
+        if (isMenuOpened) {
+            $("ul").hide();
+
+            isMenuOpened = false;
+        }
+    });
 });
 
 function getWeatherFromApi() {
