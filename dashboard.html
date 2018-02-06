@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Chrome dashboard</title>
+		<link href="https://fonts.googleapis.com/css?family=Material+Icons|Encode+Sans:400,600&amp;subset=latin-ext" rel="stylesheet" />
+		<style>
+			body {
+				margin: 0;
+				padding: 0;
+				color: #ffffff;
+				font-size: 1em;
+				-webkit-user-select: none;
+				font-family: 'Encode Sans', sans-serif;
+				background: #000000 url('images/dashboard_background.jpg');
+				background-size: cover;
+			}
+
+			strong {
+				font-weight: 600;
+			}
+
+			header {
+				height: 25px;
+				padding: 12px;
+				text-shadow: 1px 1px 1px #000000;
+			}
+
+				header .menu {
+					width: 50%;
+					float: left;
+				}
+
+					header .menu i {
+					}
+
+				header .weather {
+					width: 50%;
+					float: left;
+					text-align: right;
+				}
+
+					header .weather i {
+						margin: 0 5px;
+						padding-bottom: 5px;
+						vertical-align: middle;
+					}
+
+			a {
+				color: #ffffff;
+				text-decoration: none;
+			}
+
+			ul {
+				padding: 0;
+				display: none;
+				padding: 15px 0px;
+				margin: 35px 0 0 15px;
+				position: absolute;
+				border-radius: 5px;
+				list-style-type: none;
+				background-color: rgba(15,15,15,.800);
+			}
+
+				ul li {
+					padding: 2px 15px;
+					text-shadow: 1px 1px 1px #000000;
+				}
+
+					ul li i {
+						margin-right: 10px;
+						margin-bottom: 4px;
+						vertical-align: middle;
+					}
+
+					ul li a {
+						display: block;
+						padding-right: 10px;
+					}
+
+					ul li a:hover {
+						color: #cccccc;
+					}
+
+			#time {
+				font-size: 10em;
+				font-weight: 600;
+				margin-top: 130px;
+				text-align: center;
+				letter-spacing: 5px;
+				text-shadow: 1px 1px 1px #000000;
+			}
+
+			#salutation {
+				font-size: 3em;
+				text-align: center;
+				text-shadow: 1px 1px 1px #000000;
+			}
+
+			footer {
+				bottom: 0;
+				width: 100%;
+				padding: 12px;
+				color: #cccccc;
+				font-size: 0.8em;
+				text-align: right;
+				position: absolute;
+				box-sizing: border-box;
+				text-shadow: 1px 1px 1px #000000;
+			}
+
+				footer a:hover {
+					text-decoration: underline;
+				}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="menu">
+				<a href="#"><i class="material-icons">menu</i></a>
+			</div>
+			<div class="weather">
+				<span id="weather"></span>
+			</div>
+
+			<ul id="bookmarks"></ul>
+		</header>
+
+		<section>
+			<div id="time"></div>
+			<div id="salutation"><span id="salute"></span></div>
+		</section>
+
+		<footer>
+			&copy; 2018 <a href="http://www.cenksari.com">Cenk SARI</a>
+		</footer>
+
+		<script src="scripts/bundle.js"></script>
+		<script src="scripts/dashboard.js"></script>
+	</body>
+</html>

@@ -1,0 +1,46 @@
+[
+	{
+		"name": "Gmail",
+		"link": "https://mail.google.com"
+	},
+	{
+		"name": "Feedly",
+		"link": "https://feedly.com/i/latest"
+	},
+	{
+		"name": "Spotify",
+		"link": "https://play.spotify.com"
+	},
+	{
+		"name": "Twitter",
+		"link": "https://twitter.com"
+	},
+	{
+		"name": "Linkedin",
+		"link": "https://www.linkedin.com"
+	},
+	{
+		"name": "Facebook",
+		"link": "https://www.facebook.com"
+	},
+	{
+		"name": "Whatsapp",
+		"link": "https://web.whatsapp.com"
+	},
+	{
+		"name": "Instagram",
+		"link": "https://www.instagram.com"
+	},
+	{
+		"name": "Web Toolkit",
+		"link": "http://www.webtoolkitonline.com"
+	},
+	{
+		"name": "C# Compiler",
+		"link": "http://rextester.com"
+	},
+	{
+		"name": "Azure Portal",
+		"link": "https://portal.azure.com"
+	}
+]
