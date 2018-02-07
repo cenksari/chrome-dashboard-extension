@@ -9,6 +9,10 @@ chrome.storage.sync.get({
 $(document).ready(function () {
     getBookmarksFromFile();
 
+    $(this).bind("contextmenu", function (e) {
+        e.preventDefault();
+    });
+
     $(document).on("click", ".delete", function (e) {
         let link = $(this).attr("data-id");
 

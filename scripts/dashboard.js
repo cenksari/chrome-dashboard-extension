@@ -34,6 +34,10 @@ $(document).ready(function () {
 
     getBookmarksFromFile();
 
+    $(this).bind("contextmenu", function (e) {
+        e.preventDefault();
+    });
+
     let isMenuOpened = false;
 
     $(".menu a").click(function (e) {
@@ -51,7 +55,7 @@ $(document).ready(function () {
         }
     });
 
-    $("section,footer").click(function (e) {
+    $("section,footer,.weather").click(function (e) {
         if (isMenuOpened) {
             $("ul").hide();
 
@@ -76,7 +80,7 @@ function getWeatherFromApi() {
     });
 
     getWeather.then(function (weather) {
-        $("#weather").html('' + weatherLocation + ' <i class="material-icons">cloud_queue</i> <strong>' + weather.temp + '&deg;' + weather.units.temp + '</strong>');
+        $("#weather").html('' + weatherLocation + ' <i class="icon-' + weather.code + '"></i> <strong>' + weather.temp + '&deg;' + weather.units.temp + '</strong>');
     }).catch(function (error) {
         $("#weather").html(error);
     });
