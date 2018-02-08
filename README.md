@@ -1,2 +1,2 @@
 # Chrome Extension Development Example
-Chrome Extension v.1.0
+Chrome Extension v.1.1

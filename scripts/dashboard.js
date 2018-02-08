@@ -1,11 +1,14 @@
-let userName
+let userName;
+let bookmarks;
 let weatherLocation;
 
 chrome.storage.sync.get({
     userName: 'Chrome user',
+    bookmarks: null,
     weatherLocation: 'Istanbul, TR'
 }, function (items) {
     userName = items.userName;
+    bookmarks = JSON.parse(items.bookmarks);
     weatherLocation = items.weatherLocation;
 });
 
@@ -24,6 +27,12 @@ chrome.storage.onChanged.addListener(function (changes) {
 
             getWeatherFromApi();
         }
+
+        if (key == "bookmarks") {
+            bookmarks = JSON.parse(storageChange.newValue);
+
+            getBookmarksFromSettings();
+        }
     }
 });
 
@@ -32,7 +41,7 @@ $(document).ready(function () {
 
     getWeatherFromApi();
 
-    getBookmarksFromFile();
+    getBookmarksFromSettings();
 
     $(this).bind("contextmenu", function (e) {
         e.preventDefault();
@@ -40,7 +49,7 @@ $(document).ready(function () {
 
     let isMenuOpened = false;
 
-    $(".menu a").click(function (e) {
+    $(document).on("click", ".menu a", function (e) {
         e.preventDefault();
 
         if (isMenuOpened) {
@@ -86,35 +95,19 @@ function getWeatherFromApi() {
     });
 }
 
-function getBookmarksFromFile() {
-    const getBookmarks = new Promise(function (resolve, reject) {
-        $.ajax({
-            url: chrome.extension.getURL('bookmarks.json'),
-            dataType: 'json',
-            success: function (bookmarks) {
-                resolve(bookmarks);
-            },
-            error: function () {
-                reject("Can't get bookmarks from settings. Please refresh this page.");
-            }
-        });
-    });
+function getBookmarksFromSettings() {
+    $("#bookmarks").empty();
 
-    getBookmarks.then(function (bookmarks) {
-        let countBookmarks = 0;
+    if (bookmarks.length == 0) {
+        $(".menu").html("Bookmarks not found. Please add your bookmarks to options page.");
+    }
+    else {
+        $(".menu").html('<a href="#"><i class="material-icons">menu</i></a>');
 
         $.each(bookmarks, function (i, bookmark) {
-            countBookmarks++;
-
-            $("#bookmarks").append('<li><a href="' + bookmark.link + '"><i class="material-icons">grade</i>' + bookmark.name + '</a></li>');
+            $("#bookmarks").append('<li><a href="' + bookmark.url + '"><i class="material-icons">grade</i>' + bookmark.name + '</a></li>');
         });
-
-        if (countBookmarks < 1) {
-            $(".menu").html("Bookmarks not found. Please add your bookmarks via options page.");
-        }
-    }).catch(function (error) {
-        $(".menu").html(error);
-    });
+    }
 }
 
 function startLocalTime() {

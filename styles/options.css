@@ -6,9 +6,13 @@ body {
 	font-family: 'Encode Sans', sans-serif;
 }
 
+a {
+	color: #008cba;
+}
+
 section {
 	width: 700px;
-	margin: 30px auto;
+	margin: 30px auto 50px auto;
 }
 
 h1 {
@@ -22,6 +26,7 @@ p {
 }
 
 ul {
+	margin: 0;
 	padding: 0;
 	list-style-type: none;
 }
@@ -30,8 +35,8 @@ ul {
 		margin-bottom: 15px;
 	}
 
-		ul li a {
-			color: #008cba;
+		ul li:last-child {
+			margin-bottom: 0;
 		}
 
 .input, .select, .button {
@@ -40,6 +45,7 @@ ul {
 	outline: none;
 	font-size: 1em;
 	border-radius: 0;
+	border-radius: 3px;
 	box-sizing: border-box;
 	border: 1px solid #dadada;
 	font-family: 'Encode Sans', sans-serif;
@@ -56,12 +62,41 @@ label {
 	cursor: pointer;
 	color: #ffffff;
 	font-weight: 600;
+	border-radius: 3px;
 	background-color: #008cba;
 	border: 1px solid #008cba;
 }
 
+.add-button {
+	margin-left: 10px;
+	display: inline-block;
+	text-decoration: none;
+}
+
+	.add-button i {
+		vertical-align: middle;
+	}
+
+.add-bookmark {
+	padding: 10px;
+	display: none;
+	border-radius: 3px;
+	box-sizing: border-box;
+	background-color: #f5f5f5;
+	border: 1px solid #dadada;
+}
+
+	.add-bookmark a {
+		float: right;
+		color: #000000;
+		font-weight: 600;
+		display: inline-block;
+		text-decoration: none;
+	}
+
 table {
 	width: 100%;
+	margin-top: 20px;
 	box-sizing: border-box;
 	border-collapse: collapse;
 	border: 1px solid #dadada;
@@ -109,6 +144,13 @@ table {
 	font-family: 'Encode Sans', sans-serif;
 }
 
-#error-message {
+.error-message {
+	display: none;
+	padding: 15px;
+	color: #a94442;
 	margin-top: 20px;
+	border-radius: 3px;
+	background-color: #f2dede;
+	border: 1px solid #f2dede;
+	text-shadow: 1px 1px 1px #ffffff;
 }

@@ -19,11 +19,11 @@
 				<ul>
 					<li>
 						<label>Name</label>
-						<input class="input" type="text" name="name" id="name" placeholder="Please enter your name" autocomplete="off" maxlength="36" />
+						<input class="input" type="text" name="uname" id="uname" placeholder="Please enter your name" autocomplete="off" maxlength="36" />
 					</li>
 					<li>
 						<label>Weather location</label>
-						<select class="select" name="location" id="location">
+						<select class="select" name="ulocation" id="ulocation">
 							<option value="Istanbul, TR">Istanbul, TR</option>
 							<option value="Ankara, TR">Ankara, TR</option>
 							<option value="Izmir, TR">Izmir, TR</option>
@@ -40,18 +40,41 @@
 			<h1>Bookmarks</h1>
 
 			<p>
-				You can add/remove/reorder your bookmarks easily.
+				You can add/remove/reorder your bookmarks easily. <a href="#" class="add-button"><i class="material-icons">add</i> Add new bookmark!</a>
 			</p>
 
+			<div class="add-bookmark">
+				<form name="bookmark" id="bookmark">
+					<a href="#">X</a>
+					<ul>
+						<li>
+							<label>Name</label>
+							<input class="input" type="text" name="bname" id="bname" placeholder="Please enter bookmark name" autocomplete="off" maxlength="32" />
+						</li>
+						<li>
+							<label>URL</label>
+							<input class="input" type="text" name="burl" id="burl" placeholder="Please enter bookmark url" autocomplete="off" maxlength="256" />
+						</li>
+						<li>
+							<button class="button" type="submit" name="add" id="add">Add bookmark</button>
+						</li>
+					</ul>
+				</form>
+			</div>
+
 			<table border="0">
-				<tr>
-					<th>Name</th>
-					<th>Link</th>
-					<th></th>
-				</tr>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Link</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
 			</table>
 
-			<div id="error-message"></div>
+			<div class="error-message"></div>
 		</section>
 
 		<section>
