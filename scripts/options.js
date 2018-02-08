@@ -1,48 +1,23 @@
-let bookmarkCollection = null;
+let userName;
+let bookmarks;
+let weatherLocation;
 
 chrome.storage.sync.get({
-    bookmarks: null,
     userName: 'Chrome user',
+    bookmarks: null,
     weatherLocation: 'Istanbul, TR'
 }, function (items) {
-    bookmarks(JSON.parse(items.bookmarks));
-    $("#uname").val(items.userName);
-    $("#ulocation").val(items.weatherLocation);
+    userName = items.userName;
+    bookmarks = JSON.parse(items.bookmarks);
+    weatherLocation = items.weatherLocation;
 });
 
-function bookmarks(bookmarks) {
-    $("table tbody").empty();
-
-    if (bookmarks.length == 0) {
-        $("table").hide();
-        $(".error-message").html("Bookmarks not found. Please add your bookmarks.").show();
-    }
-    else {
-        $("table").show();
-        $(".error-message").empty().hide();
-
-        $.each(bookmarks, function (i, bookmark) {
-            $("table tbody").append('<tr><td>' + bookmark.name + '</td><td><a href="' + bookmark.url + '">' + bookmark.url + '</a></td><td><button type="button" class="delete" data-id="' + bookmark.id + '"><i class="material-icons">delete</i></button></td></tr>');
-        });
-
-        bookmarkCollection = bookmarks;
-    }
-}
-
-function isUrl(url) {
-    var regex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})/
-    return regex.test(url);
-}
-
-function guid() {
-    function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-    }
-
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-}
-
 $(document).ready(function () {
+    $("#uname").val(userName);
+    $("#ulocation").val(weatherLocation);
+
+    organizeBookmarks();
+
     $(this).bind("contextmenu", function (e) {
         e.preventDefault();
     });
@@ -96,8 +71,8 @@ $(document).ready(function () {
             });
         }
         else {
-            if (bookmarkCollection == null) {
-                bookmarkCollection = [];
+            if (bookmarks == null) {
+                bookmarks = [];
             }
 
             let bookmark = {
@@ -107,12 +82,12 @@ $(document).ready(function () {
                 "order": 0
             };
 
-            bookmarkCollection.push(bookmark);
+            bookmarks.push(bookmark);
 
             chrome.storage.sync.set({
-                bookmarks: JSON.stringify(bookmarkCollection)
+                bookmarks: JSON.stringify(bookmarks)
             }, function () {
-                bookmarks(bookmarkCollection);
+                organizeBookmarks();
 
                 $("#bname,#burl").val("");
                 $(".add-bookmark").hide();
@@ -135,14 +110,16 @@ $(document).ready(function () {
                     text: 'Yes, Delete',
                     btnClass: 'btn-red',
                     action: function () {
-                        let newArray = bookmarkCollection.filter(function (bookmark) {
+                        let newArray = bookmarks.filter(function (bookmark) {
                             return bookmark.id != id;
                         });
 
                         chrome.storage.sync.set({
                             bookmarks: JSON.stringify(newArray)
                         }, function () {
-                            bookmarks(newArray);
+                            bookmarks = newArray;
+
+                            organizeBookmarks();
                         });
                     }
                 },
@@ -191,3 +168,33 @@ $(document).ready(function () {
         }
     });
 });
+
+function organizeBookmarks() {
+    $("table tbody").empty();
+
+    if (bookmarks == null || bookmarks.length == 0) {
+        $("table").hide();
+        $(".error-message").html("Bookmarks not found. Please add your bookmarks.").show();
+    }
+    else {
+        $("table").show();
+        $(".error-message").empty().hide();
+
+        $.each(bookmarks, function (i, bookmark) {
+            $("table tbody").append('<tr><td>' + bookmark.name + '</td><td><a href="' + bookmark.url + '">' + bookmark.url + '</a></td><td><button type="button" class="delete" data-id="' + bookmark.id + '"><i class="material-icons">delete</i></button></td></tr>');
+        });
+    }
+}
+
+function isUrl(url) {
+    var regex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})/
+    return regex.test(url);
+}
+
+function guid() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    }
+
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+}

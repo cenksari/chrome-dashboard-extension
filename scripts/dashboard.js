@@ -31,7 +31,7 @@ chrome.storage.onChanged.addListener(function (changes) {
         if (key == "bookmarks") {
             bookmarks = JSON.parse(storageChange.newValue);
 
-            getBookmarksFromSettings();
+            organizeBookmarks();
         }
     }
 });
@@ -41,7 +41,7 @@ $(document).ready(function () {
 
     getWeatherFromApi();
 
-    getBookmarksFromSettings();
+    organizeBookmarks();
 
     $(this).bind("contextmenu", function (e) {
         e.preventDefault();
@@ -95,10 +95,10 @@ function getWeatherFromApi() {
     });
 }
 
-function getBookmarksFromSettings() {
+function organizeBookmarks() {
     $("#bookmarks").empty();
 
-    if (bookmarks.length == 0) {
+    if (bookmarks == null || bookmarks.length == 0) {
         $(".menu").html("Bookmarks not found. Please add your bookmarks to options page.");
     }
     else {
