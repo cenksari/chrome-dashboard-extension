@@ -79,7 +79,7 @@ $(document).ready(function () {
                 "id": guid(),
                 "name": name,
                 "url": url,
-                "order": 0
+                "order": 9999
             };
 
             bookmarks.push(bookmark);
@@ -96,7 +96,7 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".delete", function (e) {
-        let id = $(this).attr("data-id");
+        let id = $(this).parents().eq(1).attr("data-id");
 
         $.confirm({
             title: 'Confirm!',
@@ -167,6 +167,30 @@ $(document).ready(function () {
             });
         }
     });
+
+    $("tbody").sortable({
+        axis: "y",
+        placeholder: "sort-ph",
+        update: function (event, ui) {
+            $("tbody tr").each(function (index) {
+                let id = $(this).attr("data-id");
+
+                setOrder(id, index, bookmarks);
+            });
+
+            chrome.storage.sync.set({
+                bookmarks: JSON.stringify(bookmarks)
+            }, function () {
+                organizeBookmarks();
+            });
+        },
+        start: function (event, ui) {
+            ui.item.find(".hide").hide();
+        },
+        stop: function (event, ui) {
+            ui.item.find(".hide").show();
+        }
+    }).disableSelection();
 });
 
 function organizeBookmarks() {
@@ -180,10 +204,24 @@ function organizeBookmarks() {
         $("table").show();
         $(".error-message").empty().hide();
 
-        $.each(bookmarks, function (i, bookmark) {
-            $("table tbody").append('<tr><td>' + bookmark.name + '</td><td><a href="' + bookmark.url + '">' + bookmark.url + '</a></td><td><button type="button" class="delete" data-id="' + bookmark.id + '"><i class="material-icons">delete</i></button></td></tr>');
+        let orderedBookmarks = bookmarks.sort(function (a, b) {
+            return parseInt(a.order) - parseInt(b.order);
         });
+
+        for (var i = 0; i < orderedBookmarks.length; i++) {
+            let bookmark = orderedBookmarks[i];
+
+            $("table tbody").append('<tr data-id="' + bookmark.id + '"><td><a><i class="material-icons">import_export</i></a> ' + bookmark.name + '</td><td class="hide"><a href="' + bookmark.url + '">' + bookmark.url + '</a></td><td class="hide"><button type="button" class="delete">X</button></td></tr>');
+        }
     }
+}
+
+function setOrder(id, order, bookmarks) {
+    $.each(bookmarks, function (key, value) {
+        if (value.id == id) {
+            value.order = order;
+        }
+    });
 }
 
 function isUrl(url) {

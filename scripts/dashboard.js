@@ -104,9 +104,15 @@ function organizeBookmarks() {
     else {
         $(".menu").html('<a href="#"><i class="material-icons">menu</i></a>');
 
-        $.each(bookmarks, function (i, bookmark) {
-            $("#bookmarks").append('<li><a href="' + bookmark.url + '"><i class="material-icons">grade</i>' + bookmark.name + '</a></li>');
+        let orderedBookmarks = bookmarks.sort(function (a, b) {
+            return parseInt(a.order) - parseInt(b.order);
         });
+
+        for (var i = 0; i < orderedBookmarks.length; i++) {
+            let bookmark = orderedBookmarks[i];
+
+            $("#bookmarks").append('<li><a href="' + bookmark.url + '"><i class="material-icons">grade</i>' + bookmark.name + '</a></li>');
+        }
     }
 }
 
