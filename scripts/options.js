@@ -37,8 +37,8 @@ $(document).ready(function () {
     $("#bookmark").submit(function (e) {
         e.preventDefault();
 
-        let name = $.trim($("#bname").val());
         let url = $.trim($("#burl").val());
+        let name = $.trim($("#bname").val());
 
         if (name == "") {
             $.alert({
@@ -89,6 +89,8 @@ $(document).ready(function () {
             }, function () {
                 organizeBookmarks();
 
+                updated("Bookmark saved!");
+
                 $("#bname,#burl").val("");
                 $(".add-bookmark").hide();
             });
@@ -119,7 +121,11 @@ $(document).ready(function () {
                         }, function () {
                             bookmarks = newArray;
 
+                            setOrderPositions();
+
                             organizeBookmarks();
+
+                            updated("Bookmark deleted!");
                         });
                     }
                 },
@@ -172,16 +178,14 @@ $(document).ready(function () {
         axis: "y",
         placeholder: "sort-ph",
         update: function (event, ui) {
-            $("tbody tr").each(function (index) {
-                let id = $(this).attr("data-id");
-
-                setOrder(id, index, bookmarks);
-            });
+            setOrderPositions();
 
             chrome.storage.sync.set({
                 bookmarks: JSON.stringify(bookmarks)
             }, function () {
                 organizeBookmarks();
+
+                updated("Bookmark saved!");
             });
         },
         start: function (event, ui) {
@@ -216,7 +220,15 @@ function organizeBookmarks() {
     }
 }
 
-function setOrder(id, order, bookmarks) {
+function setOrderPositions() {
+    $("tbody tr").each(function (index) {
+        let id = $(this).attr("data-id");
+
+        setOrderPosition(id, index);
+    });
+}
+
+function setOrderPosition(id, order) {
     $.each(bookmarks, function (key, value) {
         if (value.id == id) {
             value.order = order;
@@ -235,4 +247,12 @@ function guid() {
     }
 
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+}
+
+function updated(text) {
+    $("#updated").html(text).show();
+
+    setTimeout(function () {
+        $("#updated").empty().hide();
+    }, 1000);
 }
