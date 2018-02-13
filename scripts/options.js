@@ -270,17 +270,20 @@ function organizeBackgroundImages() {
         "dashboard_background6.jpg",
         "dashboard_background7.jpg",
         "dashboard_background8.jpg",
-        "dashboard_background9.jpg"
+        "dashboard_background9.jpg",
+        "dashboard_background10.jpg",
+        "dashboard_background11.jpg",
+        "dashboard_background12.jpg"
     ]
 
     let template;
 
     $(images).each(function (index, image) {
         if (image == extensionBackground) {
-            template = '<li><a href="#" data-image="' + image + '"><img src="../images/thumbnails/' + image + '" width="250" height="150" alt="" /></a></li>';
+            template = '<li><a href="#" data-image="' + image + '"><img src="../images/thumbnails/' + image + '" width="184" height="110" alt="" /></a></li>';
         }
         else {
-            template = '<li><a href="#" data-image="' + image + '"><img src="../images/thumbnails/' + image + '" width="250" height="150" alt="" /></a></li>';
+            template = '<li><a href="#" data-image="' + image + '"><img src="../images/thumbnails/' + image + '" width="184" height="110" alt="" /></a></li>';
         }
 
         $("ol").append(template);

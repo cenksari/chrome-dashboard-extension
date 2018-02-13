@@ -52,6 +52,12 @@ $(document).ready(function () {
         }
     });
 
+    $(document).on('click', '#options', function (e) {
+        e.preventDefault();
+
+        chrome.tabs.create({ 'url': 'chrome-extension://' + chrome.runtime.id + '/pages/options.html' });
+    });
+
     $("#search").submit(function (e) {
         e.preventDefault();
 
@@ -62,6 +68,14 @@ $(document).ready(function () {
         }
         else {
             document.forms[0].submit();
+        }
+    });
+
+    $(".todo-icon a").click(function (e) {
+        e.preventDefault();
+
+        if (window.Notification) {
+            showNotification('Chrome dashboard', 'This feature is coming soon!');
         }
     });
 });
@@ -96,6 +110,13 @@ chrome.storage.onChanged.addListener(function (changes) {
     }
 });
 
+function showNotification(title, notificationDescription) {
+    new Notification(title, {
+        icon: '../icons/icon48.png',
+        body: notificationDescription
+    });
+}
+
 function setBackgroundImage() {
     $("body").css({
         "background-image": "url('../images/backgrounds/" + extensionBackground + "')"
@@ -128,7 +149,7 @@ function organizeBookmarks() {
     $("#bookmarks").empty();
 
     if (bookmarks == null || bookmarks.length == 0) {
-        $(".menu").html("Bookmarks not found. Please add your bookmarks to options page.");
+        $(".menu").html("Bookmarks not found. Please <a href='#' id='options'>click here</a> to add your bookmarks.");
     }
     else {
         $(".menu").html('<a href="#"><i class="material-icons">menu</i></a>');

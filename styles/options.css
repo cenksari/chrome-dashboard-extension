@@ -10,7 +10,7 @@ a {
 	color: #008cba;
 }
 
-section {
+section, footer {
 	width: 800px;
 	margin: 30px auto 50px auto;
 }
@@ -187,3 +187,13 @@ table {
 	border: 1px solid #f2dede;
 	text-shadow: 1px 1px 1px #ffffff;
 }
+
+footer {
+	font-size: 0.8em;
+	text-align: right;
+	box-sizing: border-box;
+}
+
+	footer a:hover {
+		text-decoration: underline;
+	}

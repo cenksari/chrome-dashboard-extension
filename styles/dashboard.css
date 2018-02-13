@@ -54,6 +54,10 @@ header {
 			vertical-align: middle;
 		}
 
+	header .menu #options {
+		text-decoration: underline;
+	}
+
 a {
 	color: #ffffff;
 	text-decoration: none;
@@ -176,6 +180,21 @@ footer {
 
 	footer a:hover {
 		text-decoration: underline;
+	}
+
+	footer .todo-icon {
+		float: left;
+		color: #ffffff;
+		font-size: 1.2em;
+	}
+
+	footer .todo-icon i {
+		margin-right: 5px;
+		vertical-align: middle;
+	}
+
+	footer .todo-icon a:hover {
+		text-decoration: none;
 	}
 
 .icon-0:before {
