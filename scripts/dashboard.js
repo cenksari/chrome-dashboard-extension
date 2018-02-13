@@ -21,6 +21,8 @@ $(document).ready(function () {
         setBackgroundImage();
     });
 
+    $(".search input").focus();
+
     $(this).bind("contextmenu", function (e) {
         e.preventDefault();
     });
@@ -49,11 +51,24 @@ $(document).ready(function () {
             isMenuOpened = false;
         }
     });
+
+    $("#search").submit(function (e) {
+        e.preventDefault();
+
+        const keyword = $.trim($("#q").val());
+
+        if (keyword == "") {
+            $("input").focus();
+        }
+        else {
+            document.forms[0].submit();
+        }
+    });
 });
 
 chrome.storage.onChanged.addListener(function (changes) {
     for (key in changes) {
-        var storageChange = changes[key];
+        let storageChange = changes[key];
 
         if (key == "userName") {
             userName = storageChange.newValue;
@@ -118,12 +133,14 @@ function organizeBookmarks() {
     else {
         $(".menu").html('<a href="#"><i class="material-icons">menu</i></a>');
 
-        let orderedBookmarks = bookmarks.sort(function (a, b) {
+        const orderedBookmarks = bookmarks.sort(function (a, b) {
             return parseInt(a.order) - parseInt(b.order);
         });
 
+        let bookmark;
+
         for (let i = 0; i < orderedBookmarks.length; i++) {
-            let bookmark = orderedBookmarks[i];
+            bookmark = orderedBookmarks[i];
 
             $("#bookmarks").append('<li><a href="' + bookmark.url + '"><i class="material-icons">grade</i>' + bookmark.name + '</a></li>');
         }
@@ -131,10 +148,10 @@ function organizeBookmarks() {
 }
 
 function startLocalTime() {
-    let today = new Date();
+    const today = new Date();
 
-    let h = today.getHours();
-    let m = today.getMinutes();
+    const h = today.getHours();
+    const m = today.getMinutes();
 
     if (m < 10) {
         m = "0" + m
@@ -142,7 +159,7 @@ function startLocalTime() {
 
     $("#time").text(h + ":" + m);
 
-    let t = setTimeout(startLocalTime, 1000);
+    const t = setTimeout(startLocalTime, 1000);
 
     let salutation = '';
 

@@ -152,6 +152,19 @@ table {
 		background: #f9f9f9;
 	}
 
+.edit {
+	outline: none;
+	color: #ffffff;
+	cursor: pointer;
+	font-weight: 600;
+	margin-right: 10px;
+	text-align: center;
+	box-sizing: border-box;
+	border: 1px solid #14be0c;
+	background-color: #14be0c;
+	font-family: 'Encode Sans', sans-serif;
+}
+
 .delete {
 	outline: none;
 	color: #ffffff;

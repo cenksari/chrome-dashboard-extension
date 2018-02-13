@@ -34,13 +34,15 @@ $(document).ready(function () {
         e.preventDefault();
 
         $(".add-bookmark").hide();
+        $("#bname,#burl,#bid").val("");
     });
 
     $("#bookmark").submit(function (e) {
         e.preventDefault();
 
-        let url = $.trim($("#burl").val());
-        let name = $.trim($("#bname").val());
+        const id = $.trim($("#bid").val());
+        const url = $.trim($("#burl").val());
+        const name = $.trim($("#bname").val());
 
         if (name == "") {
             $.alert({
@@ -77,14 +79,24 @@ $(document).ready(function () {
                 bookmarks = [];
             }
 
-            let bookmark = {
-                "id": guid(),
-                "name": name,
-                "url": url,
-                "order": 9999
-            };
+            if (id != "") {
+                $.each(bookmarks, function (key, value) {
+                    if (value.id == id) {
+                        value.name = name;
+                        value.url = url;
+                    }
+                });
+            }
+            else {
+                const bookmark = {
+                    "id": guid(),
+                    "name": name,
+                    "url": url,
+                    "order": 9999
+                };
 
-            bookmarks.push(bookmark);
+                bookmarks.push(bookmark);
+            }
 
             chrome.storage.sync.set({
                 "bookmarks": JSON.stringify(bookmarks)
@@ -93,14 +105,14 @@ $(document).ready(function () {
 
                 updated("Bookmark saved!");
 
-                $("#bname,#burl").val("");
                 $(".add-bookmark").hide();
+                $("#bname,#burl,#bid").val("");
             });
         }
     });
 
     $(document).on("click", ".delete", function (e) {
-        let id = $(this).parents().eq(1).attr("data-id");
+        const id = $(this).parents().eq(1).attr("data-id");
 
         $.confirm({
             title: 'Confirm!',
@@ -114,7 +126,7 @@ $(document).ready(function () {
                     text: 'Yes, Delete',
                     btnClass: 'btn-red',
                     action: function () {
-                        let newArray = bookmarks.filter(function (bookmark) {
+                        const newArray = bookmarks.filter(function (bookmark) {
                             return bookmark.id != id;
                         });
 
@@ -137,11 +149,27 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on("click", ".edit", function (e) {
+        const id = $(this).parents().eq(1).attr("data-id");
+
+        const selectedBookmark = findBoomark(id);
+
+        $(".add-bookmark").show();
+
+        $("#bname").val(selectedBookmark.name);
+        $("#burl").val(selectedBookmark.url);
+        $("#bid").val(selectedBookmark.id);
+
+        $("html,body").animate({
+            scrollTop: $(".add-bookmark").offset().top - 20
+        }, 500);
+    });
+
     $("#options").submit(function (e) {
         e.preventDefault();
 
-        let name = $.trim($("#uname").val());
-        let location = $("#ulocation").val();
+        const name = $.trim($("#uname").val());
+        const location = $("#ulocation").val();
 
         if (name == "") {
             $.alert({
@@ -179,7 +207,7 @@ $(document).ready(function () {
     $(document).on("click", "ol li a", function (e) {
         e.preventDefault();
 
-        let selectedBackground = $(this).attr("data-image");
+        const selectedBackground = $(this).attr("data-image");
 
         chrome.storage.sync.set({
             "extensionBackground": selectedBackground
@@ -224,8 +252,16 @@ $(document).ready(function () {
     }).disableSelection();
 });
 
+function findBoomark(id) {
+    for (let i = 0; i < bookmarks.length; i++) {
+        if (bookmarks[i].id == id) {
+            return bookmarks[i];
+        }
+    }
+}
+
 function organizeBackgroundImages() {
-    let images = [
+    const images = [
         "dashboard_background.jpg",
         "dashboard_background2.jpg",
         "dashboard_background3.jpg",
@@ -262,14 +298,16 @@ function organizeBookmarks() {
         $("table").show();
         $(".error-message").empty().hide();
 
-        let orderedBookmarks = bookmarks.sort(function (a, b) {
+        const orderedBookmarks = bookmarks.sort(function (a, b) {
             return parseInt(a.order) - parseInt(b.order);
         });
 
-        for (let i = 0; i < orderedBookmarks.length; i++) {
-            let bookmark = orderedBookmarks[i];
+        let bookmark;
 
-            $("table tbody").append('<tr data-id="' + bookmark.id + '"><td><a><i class="material-icons">import_export</i></a> ' + bookmark.name + '</td><td class="hide"><a href="' + bookmark.url + '">' + bookmark.url + '</a></td><td class="hide"><button type="button" class="delete">X</button></td></tr>');
+        for (let i = 0; i < orderedBookmarks.length; i++) {
+            bookmark = orderedBookmarks[i];
+
+            $("table tbody").append('<tr data-id="' + bookmark.id + '"><td><a><i class="material-icons">import_export</i></a> ' + bookmark.name + '</td><td class="hide"><a href="' + bookmark.url + '">' + bookmark.url + '</a></td><td class="hide"><button type="button" class="edit">E</button><button type="button" class="delete">X</button></td></tr>');
         }
     }
 }
@@ -281,7 +319,7 @@ function setOptionsFormFields() {
 
 function setOrderPositions() {
     $("tbody tr").each(function (index) {
-        let id = $(this).attr("data-id");
+        const id = $(this).attr("data-id");
 
         setOrderPosition(id, index);
     });
@@ -296,7 +334,8 @@ function setOrderPosition(id, order) {
 }
 
 function isUrl(url) {
-    var regex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})/
+    const regex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})/
+
     return regex.test(url);
 }
 
