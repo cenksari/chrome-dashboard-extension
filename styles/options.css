@@ -25,7 +25,7 @@ p {
 	line-height: 160%;
 }
 
-ul {
+ul, ol {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
@@ -39,6 +39,11 @@ ul {
 			margin-bottom: 0;
 		}
 
+	ol li {
+		margin: 5px 8px;
+		display: inline-block;
+	}
+
 .input, .select, .button {
 	width: 100%;
 	padding: 10px;
@@ -47,6 +52,7 @@ ul {
 	border-radius: 0;
 	border-radius: 3px;
 	box-sizing: border-box;
+	-webkit-appearance: none;
 	border: 1px solid #dadada;
 	font-family: 'Encode Sans', sans-serif;
 }

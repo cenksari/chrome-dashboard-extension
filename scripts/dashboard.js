@@ -1,47 +1,25 @@
 let userName;
 let bookmarks;
 let weatherLocation;
-
-chrome.storage.sync.get({
-    userName: 'Chrome user',
-    bookmarks: null,
-    weatherLocation: 'Istanbul, TR'
-}, function (items) {
-    userName = items.userName;
-    bookmarks = JSON.parse(items.bookmarks);
-    weatherLocation = items.weatherLocation;
-});
-
-chrome.storage.onChanged.addListener(function (changes) {
-    for (key in changes) {
-        var storageChange = changes[key];
-
-        if (key == "userName") {
-            userName = storageChange.newValue;
-
-            startLocalTime();
-        }
-
-        if (key == "weatherLocation") {
-            weatherLocation = storageChange.newValue;
-
-            getWeatherFromApi();
-        }
-
-        if (key == "bookmarks") {
-            bookmarks = JSON.parse(storageChange.newValue);
-
-            organizeBookmarks();
-        }
-    }
-});
+let extensionBackground;
 
 $(document).ready(function () {
-    startLocalTime();
+    chrome.storage.sync.get({
+        "userName": "Chrome user",
+        "bookmarks": null,
+        "weatherLocation": "Istanbul, TR",
+        "extensionBackground": "dashboard_background.jpg"
+    }, function (items) {
+        userName = items.userName;
+        bookmarks = JSON.parse(items.bookmarks);
+        weatherLocation = items.weatherLocation;
+        extensionBackground = items.extensionBackground;
 
-    getWeatherFromApi();
-
-    organizeBookmarks();
+        startLocalTime();
+        organizeBookmarks();
+        getWeatherFromApi();
+        setBackgroundImage();
+    });
 
     $(this).bind("contextmenu", function (e) {
         e.preventDefault();
@@ -73,12 +51,48 @@ $(document).ready(function () {
     });
 });
 
+chrome.storage.onChanged.addListener(function (changes) {
+    for (key in changes) {
+        var storageChange = changes[key];
+
+        if (key == "userName") {
+            userName = storageChange.newValue;
+
+            startLocalTime();
+        }
+
+        if (key == "weatherLocation") {
+            weatherLocation = storageChange.newValue;
+
+            getWeatherFromApi();
+        }
+
+        if (key == "bookmarks") {
+            bookmarks = JSON.parse(storageChange.newValue);
+
+            organizeBookmarks();
+        }
+
+        if (key == "extensionBackground") {
+            extensionBackground = storageChange.newValue;
+
+            setBackgroundImage();
+        }
+    }
+});
+
+function setBackgroundImage() {
+    $("body").css({
+        "background-image": "url('../images/backgrounds/" + extensionBackground + "')"
+    });
+}
+
 function getWeatherFromApi() {
     const getWeather = new Promise(function (resolve, reject) {
         $.simpleWeather({
-            location: weatherLocation,
-            woeid: '',
             unit: 'c',
+            woeid: '',
+            location: weatherLocation,
             success: function (weather) {
                 resolve(weather);
             },
@@ -108,7 +122,7 @@ function organizeBookmarks() {
             return parseInt(a.order) - parseInt(b.order);
         });
 
-        for (var i = 0; i < orderedBookmarks.length; i++) {
+        for (let i = 0; i < orderedBookmarks.length; i++) {
             let bookmark = orderedBookmarks[i];
 
             $("#bookmarks").append('<li><a href="' + bookmark.url + '"><i class="material-icons">grade</i>' + bookmark.name + '</a></li>');
@@ -122,11 +136,13 @@ function startLocalTime() {
     let h = today.getHours();
     let m = today.getMinutes();
 
-    m = checkTime(m);
+    if (m < 10) {
+        m = "0" + m
+    };
 
     $("#time").text(h + ":" + m);
 
-    let t = setTimeout(startLocalTime, 500);
+    let t = setTimeout(startLocalTime, 1000);
 
     let salutation = '';
 
@@ -144,12 +160,4 @@ function startLocalTime() {
     }
 
     $("#salute").text(salutation + ', ' + userName);
-}
-
-function checkTime(i) {
-    if (i < 10) {
-        i = "0" + i
-    };
-
-    return i;
 }

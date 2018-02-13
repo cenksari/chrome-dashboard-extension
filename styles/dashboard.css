@@ -11,9 +11,9 @@ body {
 	padding: 0;
 	color: #ffffff;
 	font-size: 1em;
+	background-color: #000000;
 	-webkit-user-select: none;
 	font-family: 'Encode Sans', sans-serif;
-	background: #000000 url('../images/dashboard_background.jpg');
 	background-size: cover;
 }
 

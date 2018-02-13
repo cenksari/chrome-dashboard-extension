@@ -1,22 +1,24 @@
 let userName;
 let bookmarks;
 let weatherLocation;
-
-chrome.storage.sync.get({
-    userName: 'Chrome user',
-    bookmarks: null,
-    weatherLocation: 'Istanbul, TR'
-}, function (items) {
-    userName = items.userName;
-    bookmarks = JSON.parse(items.bookmarks);
-    weatherLocation = items.weatherLocation;
-});
+let extensionBackground;
 
 $(document).ready(function () {
-    $("#uname").val(userName);
-    $("#ulocation").val(weatherLocation);
+    chrome.storage.sync.get({
+        "userName": "Chrome user",
+        "bookmarks": null,
+        "weatherLocation": "Istanbul, TR",
+        "extensionBackground": "dashboard_background.jpg"
+    }, function (items) {
+        userName = items.userName;
+        bookmarks = JSON.parse(items.bookmarks);
+        weatherLocation = items.weatherLocation;
+        extensionBackground = items.extensionBackground;
 
-    organizeBookmarks();
+        organizeBookmarks();
+        setOptionsFormFields();
+        organizeBackgroundImages();
+    });
 
     $(this).bind("contextmenu", function (e) {
         e.preventDefault();
@@ -85,7 +87,7 @@ $(document).ready(function () {
             bookmarks.push(bookmark);
 
             chrome.storage.sync.set({
-                bookmarks: JSON.stringify(bookmarks)
+                "bookmarks": JSON.stringify(bookmarks)
             }, function () {
                 organizeBookmarks();
 
@@ -117,7 +119,7 @@ $(document).ready(function () {
                         });
 
                         chrome.storage.sync.set({
-                            bookmarks: JSON.stringify(newArray)
+                            "bookmarks": JSON.stringify(newArray)
                         }, function () {
                             bookmarks = newArray;
 
@@ -153,8 +155,8 @@ $(document).ready(function () {
         }
         else {
             chrome.storage.sync.set({
-                userName: name,
-                weatherLocation: location
+                "userName": name,
+                "weatherLocation": location
             }, function () {
                 $.alert({
                     title: 'Success!',
@@ -174,6 +176,31 @@ $(document).ready(function () {
         }
     });
 
+    $(document).on("click", "ol li a", function (e) {
+        e.preventDefault();
+
+        let selectedBackground = $(this).attr("data-image");
+
+        chrome.storage.sync.set({
+            "extensionBackground": selectedBackground
+        }, function () {
+            $.alert({
+                title: 'Success!',
+                content: 'Background successfully changed.',
+                type: 'blue',
+                boxWidth: '400px',
+                useBootstrap: false,
+                typeAnimated: true,
+                autoClose: 'okButton|9000',
+                buttons: {
+                    okButton: {
+                        text: "OK"
+                    }
+                }
+            });
+        });
+    });
+
     $("tbody").sortable({
         axis: "y",
         placeholder: "sort-ph",
@@ -181,7 +208,7 @@ $(document).ready(function () {
             setOrderPositions();
 
             chrome.storage.sync.set({
-                bookmarks: JSON.stringify(bookmarks)
+                "bookmarks": JSON.stringify(bookmarks)
             }, function () {
                 organizeBookmarks();
 
@@ -196,6 +223,33 @@ $(document).ready(function () {
         }
     }).disableSelection();
 });
+
+function organizeBackgroundImages() {
+    let images = [
+        "dashboard_background.jpg",
+        "dashboard_background2.jpg",
+        "dashboard_background3.jpg",
+        "dashboard_background4.jpg",
+        "dashboard_background5.jpg",
+        "dashboard_background6.jpg",
+        "dashboard_background7.jpg",
+        "dashboard_background8.jpg",
+        "dashboard_background9.jpg"
+    ]
+
+    let template;
+
+    $(images).each(function (index, image) {
+        if (image == extensionBackground) {
+            template = '<li><a href="#" data-image="' + image + '"><img src="../images/thumbnails/' + image + '" width="250" height="150" alt="" /></a></li>';
+        }
+        else {
+            template = '<li><a href="#" data-image="' + image + '"><img src="../images/thumbnails/' + image + '" width="250" height="150" alt="" /></a></li>';
+        }
+
+        $("ol").append(template);
+    });
+}
 
 function organizeBookmarks() {
     $("table tbody").empty();
@@ -212,12 +266,17 @@ function organizeBookmarks() {
             return parseInt(a.order) - parseInt(b.order);
         });
 
-        for (var i = 0; i < orderedBookmarks.length; i++) {
+        for (let i = 0; i < orderedBookmarks.length; i++) {
             let bookmark = orderedBookmarks[i];
 
             $("table tbody").append('<tr data-id="' + bookmark.id + '"><td><a><i class="material-icons">import_export</i></a> ' + bookmark.name + '</td><td class="hide"><a href="' + bookmark.url + '">' + bookmark.url + '</a></td><td class="hide"><button type="button" class="delete">X</button></td></tr>');
         }
     }
+}
+
+function setOptionsFormFields() {
+    $("#uname").val(userName);
+    $("#ulocation").val(weatherLocation);
 }
 
 function setOrderPositions() {
