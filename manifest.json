@@ -2,7 +2,7 @@
 	"name": "Chrome Dashboard",
 	"short_name": "New Tab page",
 	"description": "Shiny new chrome browser new tab screen.",
-	"version": "1.4",
+	"version": "1.5",
 	"manifest_version": 2,
 	"author": "Cenk SARI (cenk@cenksari.com)",
 	"homepage_url": "http://www.cenksari.com",

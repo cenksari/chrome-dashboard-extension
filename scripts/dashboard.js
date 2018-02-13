@@ -151,7 +151,8 @@ function startLocalTime() {
     const today = new Date();
 
     const h = today.getHours();
-    const m = today.getMinutes();
+
+    let m = today.getMinutes();
 
     if (m < 10) {
         m = "0" + m
