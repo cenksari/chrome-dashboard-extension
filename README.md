@@ -1,2 +1,2 @@
-# Chrome Extension Development Example
-Chrome Extension v.1.1
+# Chrome Dashboard Extension
+Chrome Dashboard Extension
