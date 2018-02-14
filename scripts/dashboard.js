@@ -156,11 +156,17 @@ function startLocalTime() {
 
     let m = today.getMinutes();
 
+    let s = today.getSeconds();
+
     if (m < 10) {
         m = "0" + m
     };
 
-    $("#time").text(h + ":" + m);
+    if (s < 10) {
+        s = "0" + s
+    };
+
+    $("#time").html("<time><hours>" + h + ":" + m + "</hours></time>");
 
     const t = setTimeout(startLocalTime, 1000);
 

@@ -151,13 +151,24 @@ section {
 }
 
 #time {
-	font-size: 10em;
 	font-weight: 600;
-	line-height: 100%;
 	text-align: center;
 	letter-spacing: 5px;
 	text-shadow: 1px 1px 1px #000000;
 }
+
+	#time hours {
+		font-size: 10em;
+		display: inline-block;
+	}
+
+	#time seconds {
+		width: 85px;
+		font-size: 3em;
+		text-align: left;
+		display: inline-block;
+		vertical-align: bottom;
+	}
 
 #salutation {
 	font-size: 3em;
@@ -182,25 +193,29 @@ footer {
 		text-decoration: underline;
 	}
 
-	footer .todo-icon {
+	footer .links {
 		float: left;
 		color: #ffffff;
 		font-size: 1.2em;
 	}
 
+		footer .links a {
+			margin-right: 20px;
+		}
+
+		footer .links i {
+			margin-right: 5px;
+			margin-bottom: 5px;
+			vertical-align: middle;
+		}
+
+		footer .links a:hover {
+			text-decoration: none;
+		}
+
 	footer .copyright {
 		float: right;
 		padding-top: 10px;
-	}
-
-	footer .todo-icon i {
-		margin-right: 5px;
-		margin-bottom: 5px;
-		vertical-align: middle;
-	}
-
-	footer .todo-icon a:hover {
-		text-decoration: none;
 	}
 
 .icon-0:before {

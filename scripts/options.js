@@ -28,6 +28,8 @@ $(function () {
         e.preventDefault();
 
         $(".add-bookmark").show();
+
+        $("#add").text("Add bookmark");
     });
 
     $(".add-bookmark a").click(function (e) {
@@ -116,7 +118,7 @@ $(function () {
 
         $.confirm({
             title: 'Confirm!',
-            content: 'Are you sure you want to delete item?',
+            content: 'Are you sure you want to delete bookmark?',
             type: 'red',
             boxWidth: '400px',
             useBootstrap: false,
@@ -155,6 +157,8 @@ $(function () {
         const selectedBookmark = findBoomark(id);
 
         $(".add-bookmark").show();
+
+        $("#add").text("Edit bookmark");
 
         $("#bname").val(selectedBookmark.name);
         $("#burl").val(selectedBookmark.url);

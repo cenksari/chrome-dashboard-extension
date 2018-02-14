@@ -11,7 +11,7 @@ $(function () {
 
     let isListOpened = false;
 
-    $(".todo-icon a").click(function (e) {
+    $("#todolist").click(function (e) {
         e.preventDefault();
 
         if (isListOpened) {

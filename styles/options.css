@@ -74,12 +74,21 @@ label {
 }
 
 .add-button {
+	float: right;
+	color: #ffffff;
+	font-weight: 600;
+	margin-top: 11px;
+	padding: 5px 10px;
 	margin-left: 10px;
+	border-radius: 3px;
 	display: inline-block;
 	text-decoration: none;
+	background-color: #008cba;
+	border: 1px solid #008cba;
 }
 
 	.add-button i {
+		margin-right: 5px;
 		vertical-align: middle;
 	}
 
