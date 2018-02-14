@@ -1,5 +1,5 @@
 # Chrome Dashboard Extension
-Chrome extension for new tab page replacement.
+Shiny new chrome browser new tab screen. Chrome extension for new tab page replacement. Add your favorite bookmarks and todo list to Chrome Dashboard. Customize your browser's background image. This free extension will make you more productive then ever.
 
 Features
 --------
@@ -13,9 +13,9 @@ Features
 Installation
 ------------
 
-**Option 1** – just install it from the [Chrome Web Store](https://chrome.google.com/webstore/detail/chrome-dashboard/ehmbackcndnlaemcmboagmfmealkfkla).
+**Option 1** - just install it from the [Chrome Web Store](https://chrome.google.com/webstore/detail/chrome-dashboard/ehmbackcndnlaemcmboagmfmealkfkla).
 
-**Option 2** – install it from source:
+**Option 2** - install it from source:
 
 * clone/download this repo,
 * open Chrome and go to `chrome://chrome/extensions/`,
