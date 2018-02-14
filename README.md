@@ -1,5 +1,4 @@
 # Chrome Dashboard Extension
-==============
 Chrome extension for new tab page replacement.
 
 Features
