@@ -1,123 +1,110 @@
 ﻿<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<title>Chrome dashboard</title>
-		<link href="https://fonts.googleapis.com/css?family=Material+Icons|Encode+Sans:400,600&amp;subset=latin-ext" rel="stylesheet" />
-		<link href="../styles/options.css" rel="stylesheet" />
-		<link href="../styles/confirm.css" rel="stylesheet" />
-	</head>
-	<body>
-		<section>
-			<h1>Chrome dashboard options</h1>
+<head>
+	<meta charset="utf-8" />
+	<title>Chrome dashboard</title>
+	<link href="https://fonts.googleapis.com/css?family=Material+Icons|Encode+Sans:400,600&amp;subset=latin-ext" rel="stylesheet" />
+	<link href="../styles/options.css" rel="stylesheet" />
+	<link href="../styles/confirm.css" rel="stylesheet" />
+</head>
+<body>
+	<section>
+		<h1>Chrome dashboard options</h1>
 
-			<p>
-				Please enter your chrome dashboard extension options.
-			</p>
+		<p>
+			Please enter your chrome dashboard extension options.
+		</p>
 
-			<form name="options" id="options">
+		<form name="options" id="options">
+			<ul>
+				<li>
+					<label>Name</label>
+					<input class="input" type="text" name="uname" id="uname" placeholder="Please enter your name" autocomplete="off" maxlength="36" />
+				</li>
+				<li>
+					<label>Weather location</label>
+					<select class="select" name="ulocation" id="ulocation">
+						<option value="Istanbul, TR">Istanbul, TR</option>
+						<option value="Ankara, TR">Ankara, TR</option>
+						<option value="Izmir, TR">Izmir, TR</option>
+						<option value="London, UK">London, UK</option>
+					</select>
+				</li>
+				<li>
+					<button class="button" type="submit" name="save" id="save">Save options</button>
+				</li>
+			</ul>
+		</form>
+	</section>
+
+	<section>
+		<h1>Bookmarks</h1>
+
+		<p>
+			You can add/remove/reorder your bookmarks easily. <a href="#" class="add-button"><i class="material-icons">add</i> Add new bookmark!</a>
+		</p>
+
+		<div class="add-bookmark">
+			<form name="bookmark" id="bookmark">
+				<a href="#">X</a>
 				<ul>
 					<li>
 						<label>Name</label>
-						<input class="input" type="text" name="uname" id="uname" placeholder="Please enter your name" autocomplete="off" maxlength="36" />
+						<input class="input" type="text" name="bname" id="bname" placeholder="Please enter bookmark name" autocomplete="off" maxlength="32" />
 					</li>
 					<li>
-						<label>Weather location</label>
-						<select class="select" name="ulocation" id="ulocation">
-							<option value="Istanbul, TR">Istanbul, TR</option>
-							<option value="Ankara, TR">Ankara, TR</option>
-							<option value="Izmir, TR">Izmir, TR</option>
-							<option value="London, UK">London, UK</option>
-						</select>
+						<label>URL</label>
+						<input class="input" type="text" name="burl" id="burl" placeholder="Please enter bookmark url" autocomplete="off" maxlength="256" />
 					</li>
 					<li>
-						<button class="button" type="submit" name="save" id="save">Save options</button>
+						<button class="button" type="submit" name="add" id="add">Add bookmark</button>
 					</li>
 				</ul>
+				<input type="hidden" name="bid" id="bid" value="" />
 			</form>
-		</section>
+		</div>
 
-		<section>
-			<h1>Bookmarks</h1>
+		<table border="0">
+			<thead>
+				<tr>
+					<th width="28%">Name</th>
+					<th width="68%" colspan="2">URL<span id="updated"></span></th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
 
-			<p>
-				You can add/remove/reorder your bookmarks easily. <a href="#" class="add-button"><i class="material-icons">add</i> Add new bookmark!</a>
-			</p>
+		<div class="error-message"></div>
+	</section>
 
-			<div class="add-bookmark">
-				<form name="bookmark" id="bookmark">
-					<a href="#">X</a>
-					<ul>
-						<li>
-							<label>Name</label>
-							<input class="input" type="text" name="bname" id="bname" placeholder="Please enter bookmark name" autocomplete="off" maxlength="32" />
-						</li>
-						<li>
-							<label>URL</label>
-							<input class="input" type="text" name="burl" id="burl" placeholder="Please enter bookmark url" autocomplete="off" maxlength="256" />
-						</li>
-						<li>
-							<button class="button" type="submit" name="add" id="add">Add bookmark</button>
-						</li>
-					</ul>
-					<input type="hidden" name="bid" id="bid" value="" />
-				</form>
-			</div>
+	<section>
+		<h1>Background image</h1>
 
-			<table border="0">
-				<thead>
-					<tr>
-						<th width="28%">Name</th>
-						<th width="68%" colspan="2">URL<span id="updated"></span></th>
-					</tr>
-				</thead>
-				<tbody></tbody>
-			</table>
+		<p>
+			Please select your background image.
+		</p>
 
-			<div class="error-message"></div>
-		</section>
+		<ol></ol>
+	</section>
 
-		<section>
-			<h1>Background image</h1>
+	<section>
+		<h1>Third-party software</h1>
 
-			<p>
-				Please select your background image.
-			</p>
+		<p>
+			Several fantastic pieces of free and open-source software have really helped get Chrome Dashboard Extension to where it is today. A big thanks from all of us at Chrome Dashboard Extension to the smart people behind the fantastic programs listed.
+		</p>
 
-			<ol></ol>
-		</section>
+		<p>
+			JQuery 3.3.1 (<a href="https://github.com/jquery/jquery/blob/master/LICENSE.txt">License</a>), JQuery UI 1.12.1 (<a href="https://github.com/jquery/jquery-ui/blob/master/LICENSE.txt">License</a>), SimpleWeather 3.1.0 (<a href="https://github.com/monkeecreate/jquery.simpleWeather/blob/master/MIT-LICENSE.txt">License</a>), JQuery Confirm 3.3.0 (<a href="https://github.com/craftpip/jquery-confirm/blob/master/LICENSE">License</a>), Pexels Free stock photos (<a href="https://www.pexels.com/photo-license/">License</a>)
+		</p>
+	</section>
 
-		<section>
-			<h1>Third-party software</h1>
+	<footer>
+		&copy; Copyright 2018 <a href="http://www.cenksari.com">Cenk SARI</a>
+	</footer>
 
-			<p>
-				Several fantastic pieces of free and open-source software have really helped get Chrome Dashboard Extension to where it is today. A big thanks from all of us at Chrome Dashboard Extension to the smart people behind the fantastic programs listed.
-			</p>
-
-			<ul>
-				<li>
-					<a href="https://jquery.com">JQuery v3.3.1</a> - License <a href="https://github.com/jquery/jquery/blob/master/LICENSE.txt">License</a>
-				</li>
-				<li>
-					<a href="https://jqueryui.com">JQuery UI v1.12.1</a> - License <a href="https://github.com/jquery/jquery-ui/blob/master/LICENSE.txt">License</a>
-				</li>
-				<li>
-					<a href="http://simpleweatherjs.com">SimpleWeather v3.1.0</a> - License <a href="https://github.com/monkeecreate/jquery.simpleWeather/blob/master/MIT-LICENSE.txt">MIT License</a>
-				</li>
-				<li>
-					<a href="https://github.com/craftpip/jquery-confirm">JQuery Confirm v3.3.0</a> - License <a href="https://github.com/craftpip/jquery-confirm/blob/master/LICENSE">MIT License</a>
-				</li>
-				<li>
-					<a href="https://www.pexels.com">Pexels Free stock photos</a> - License <a href="https://www.pexels.com/photo-license/">License</a>
-				</li>
-			</ul>
-		</section>
-
-		<footer>
-			&copy; 2018 <a href="http://www.cenksari.com">Cenk SARI</a>
-		</footer>
-
-		<script src="../scripts/bundle.js"></script>
-		<script src="../scripts/options.js"></script>
-	</body>
+	<script src="../scripts/bundle.js"></script>
+	<script src="../scripts/functions.js"></script>
+	<script src="../scripts/options.js"></script>
+</body>
 </html>

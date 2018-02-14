@@ -3,7 +3,7 @@ let bookmarks;
 let weatherLocation;
 let extensionBackground;
 
-$(document).ready(function () {
+$(function () {
     chrome.storage.sync.get({
         "userName": "Chrome user",
         "bookmarks": null,
@@ -70,14 +70,6 @@ $(document).ready(function () {
             document.forms[0].submit();
         }
     });
-
-    $(".todo-icon a").click(function (e) {
-        e.preventDefault();
-
-        if (window.Notification) {
-            showNotification('Chrome dashboard', 'This feature is coming soon!');
-        }
-    });
 });
 
 chrome.storage.onChanged.addListener(function (changes) {
@@ -109,13 +101,6 @@ chrome.storage.onChanged.addListener(function (changes) {
         }
     }
 });
-
-function showNotification(title, notificationDescription) {
-    new Notification(title, {
-        icon: '../icons/icon48.png',
-        body: notificationDescription
-    });
-}
 
 function setBackgroundImage() {
     $("body").css({
@@ -158,13 +143,9 @@ function organizeBookmarks() {
             return parseInt(a.order) - parseInt(b.order);
         });
 
-        let bookmark;
-
-        for (let i = 0; i < orderedBookmarks.length; i++) {
-            bookmark = orderedBookmarks[i];
-
-            $("#bookmarks").append('<li><a href="' + bookmark.url + '"><i class="material-icons">grade</i>' + bookmark.name + '</a></li>');
-        }
+        $.each(orderedBookmarks, function (key, value) {
+            $("#bookmarks").append('<li><a href="' + value.url + '"><i class="material-icons">grade</i>' + value.name + '</a></li>');
+        });
     }
 }
 

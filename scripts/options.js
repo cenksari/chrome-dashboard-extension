@@ -3,7 +3,7 @@ let bookmarks;
 let weatherLocation;
 let extensionBackground;
 
-$(document).ready(function () {
+$(function () {
     chrome.storage.sync.get({
         "userName": "Chrome user",
         "bookmarks": null,
@@ -103,7 +103,7 @@ $(document).ready(function () {
             }, function () {
                 organizeBookmarks();
 
-                updated("Bookmark saved!");
+                showNotification("Chrome dashboard", "Bookmark successfully saved.");
 
                 $(".add-bookmark").hide();
                 $("#bname,#burl,#bid").val("");
@@ -139,7 +139,7 @@ $(document).ready(function () {
 
                             organizeBookmarks();
 
-                            updated("Bookmark deleted!");
+                            showNotification("Chrome dashboard", "Bookmark successfully deleted.");
                         });
                     }
                 },
@@ -186,20 +186,7 @@ $(document).ready(function () {
                 "userName": name,
                 "weatherLocation": location
             }, function () {
-                $.alert({
-                    title: 'Success!',
-                    content: 'Options successfully saved.',
-                    type: 'blue',
-                    boxWidth: '400px',
-                    useBootstrap: false,
-                    typeAnimated: true,
-                    autoClose: 'okButton|9000',
-                    buttons: {
-                        okButton: {
-                            text: "OK"
-                        }
-                    }
-                });
+                showNotification("Chrome dashboard", "Options successfully saved.");
             });
         }
     });
@@ -212,20 +199,7 @@ $(document).ready(function () {
         chrome.storage.sync.set({
             "extensionBackground": selectedBackground
         }, function () {
-            $.alert({
-                title: 'Success!',
-                content: 'Background successfully changed.',
-                type: 'blue',
-                boxWidth: '400px',
-                useBootstrap: false,
-                typeAnimated: true,
-                autoClose: 'okButton|9000',
-                buttons: {
-                    okButton: {
-                        text: "OK"
-                    }
-                }
-            });
+            showNotification("Chrome dashboard", "Background successfully changed.");
         });
     });
 
@@ -239,8 +213,6 @@ $(document).ready(function () {
                 "bookmarks": JSON.stringify(bookmarks)
             }, function () {
                 organizeBookmarks();
-
-                updated("Bookmark saved!");
             });
         },
         start: function (event, ui) {
@@ -334,26 +306,4 @@ function setOrderPosition(id, order) {
             value.order = order;
         }
     });
-}
-
-function isUrl(url) {
-    const regex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})/
-
-    return regex.test(url);
-}
-
-function guid() {
-    function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-    }
-
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-}
-
-function updated(text) {
-    $("#updated").html(text).show();
-
-    setTimeout(function () {
-        $("#updated").empty().hide();
-    }, 1000);
 }

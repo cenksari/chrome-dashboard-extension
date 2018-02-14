@@ -188,8 +188,14 @@ footer {
 		font-size: 1.2em;
 	}
 
+	footer .copyright {
+		float: right;
+		padding-top: 10px;
+	}
+
 	footer .todo-icon i {
 		margin-right: 5px;
+		margin-bottom: 5px;
 		vertical-align: middle;
 	}
 

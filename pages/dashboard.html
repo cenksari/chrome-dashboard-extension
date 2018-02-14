@@ -1,43 +1,58 @@
 ﻿<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<title>Chrome dashboard</title>
-		<link href="https://fonts.googleapis.com/css?family=Material+Icons|Encode+Sans:400,600&amp;subset=latin-ext" rel="stylesheet" />
-		<link href="../styles/dashboard.css" rel="stylesheet" />
-	</head>
-	<body>
-		<header>
-			<div class="menu"></div>
+<head>
+	<meta charset="utf-8" />
+	<title>Chrome dashboard</title>
+	<link href="https://fonts.googleapis.com/css?family=Material+Icons|Encode+Sans:400,600&amp;subset=latin-ext" rel="stylesheet" />
+	<link href="../styles/dashboard.css" rel="stylesheet" />
+	<link href="../styles/todo.css" rel="stylesheet" />
+</head>
+<body>
+	<header>
+		<div class="menu"></div>
 
-			<div class="weather">
-				<span id="weather"></span>
+		<div class="weather">
+			<span id="weather"></span>
+		</div>
+
+		<ul id="bookmarks"></ul>
+	</header>
+
+	<section>
+		<div class="container">
+			<div id="time"></div>
+			<div id="salutation"><span id="salute"></span></div>
+
+			<div class="search">
+				<form method="get" id="search" action="https://www.google.com/search">
+					<input type="text" name="q" id="q" placeholder="Enter search keyword" autocomplete="on" maxlength="255" /><button type="submit">SEARCH</button>
+				</form>
 			</div>
+		</div>
+	</section>
 
-			<ul id="bookmarks"></ul>
-		</header>
-
-		<section>
-			<div class="container">
-				<div id="time"></div>
-				<div id="salutation"><span id="salute"></span></div>
-
-				<div class="search">
-					<form method="get" id="search" action="https://www.google.com/search">
-						<input type="text" name="q" id="q" placeholder="Enter search keyword" autocomplete="on" maxlength="255" /><button type="submit">SEARCH</button>
-					</form>
-				</div>
+	<div id="todo-list">
+		<div class="todo-input">
+			<input type="text" name="add" id="add" placeholder="Write and press enter to add todo item" />
+		</div>
+		<div class="scroll">
+			<div class="todo-items">
 			</div>
-		</section>
+		</div>
+	</div>
 
-		<footer>
-			<div class="todo-icon">
-				<a href="#"><i class="material-icons">alarm</i>Todo list</a>
-			</div>
-			&copy; 2018 <a href="http://www.cenksari.com">Cenk SARI</a>
-		</footer>
+	<footer>
+		<div class="todo-icon">
+			<a href="#"><i class="material-icons">alarm</i>Todo list</a>
+		</div>
+		<div class="copyright">
+			&copy; Copyright 2018 <a href="http://www.cenksari.com">Cenk SARI</a>
+		</div>
+	</footer>
 
-		<script src="../scripts/bundle.js"></script>
-		<script src="../scripts/dashboard.js"></script>
-	</body>
+	<script src="../scripts/bundle.js"></script>
+	<script src="../scripts/functions.js"></script>
+	<script src="../scripts/dashboard.js"></script>
+	<script src="../scripts/todo.js"></script>
+</body>
 </html>
