@@ -143,8 +143,8 @@ function organizeBookmarks() {
             return parseInt(a.order) - parseInt(b.order);
         });
 
-        $.each(orderedBookmarks, function (key, value) {
-            $("#bookmarks").append('<li><a href="' + value.url + '"><i class="material-icons">grade</i>' + value.name + '</a></li>');
+        $.each(orderedBookmarks, function () {
+            $("#bookmarks").append('<li><a href="' + this.url + '"><i class="material-icons">grade</i>' + this.name + '</a></li>');
         });
     }
 }

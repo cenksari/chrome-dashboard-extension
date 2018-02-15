@@ -36,6 +36,7 @@ $(function () {
         e.preventDefault();
 
         $(".add-bookmark").hide();
+
         $("#bname,#burl,#bid").val("");
     });
 
@@ -81,11 +82,13 @@ $(function () {
                 bookmarks = [];
             }
 
+            setOrderPositions();
+
             if (id != "") {
-                $.each(bookmarks, function (key, value) {
-                    if (value.id == id) {
-                        value.name = name;
-                        value.url = url;
+                $.each(bookmarks, function () {
+                    if (this.id == id) {
+                        this.name = name;
+                        this.url = url;
                     }
                 });
             }
@@ -94,7 +97,7 @@ $(function () {
                     "id": guid(),
                     "name": name,
                     "url": url,
-                    "order": 9999
+                    "order": $(bookmarks).length
                 };
 
                 bookmarks.push(bookmark);
@@ -103,11 +106,10 @@ $(function () {
             chrome.storage.sync.set({
                 "bookmarks": JSON.stringify(bookmarks)
             }, function () {
-                organizeBookmarks();
-
                 showNotification("Chrome dashboard", "Bookmark successfully saved.");
 
                 $(".add-bookmark").hide();
+
                 $("#bname,#burl,#bid").val("");
             });
         }
@@ -128,20 +130,12 @@ $(function () {
                     text: 'Yes, Delete',
                     btnClass: 'btn-red',
                     action: function () {
-                        const newArray = bookmarks.filter(function (bookmark) {
+                        bookmarks = bookmarks.filter(function (bookmark) {
                             return bookmark.id != id;
                         });
 
                         chrome.storage.sync.set({
-                            "bookmarks": JSON.stringify(newArray)
-                        }, function () {
-                            bookmarks = newArray;
-
-                            setOrderPositions();
-
-                            organizeBookmarks();
-
-                            showNotification("Chrome dashboard", "Bookmark successfully deleted.");
+                            "bookmarks": JSON.stringify(bookmarks)
                         });
                     }
                 },
@@ -154,7 +148,7 @@ $(function () {
     $(document).on("click", ".edit", function (e) {
         const id = $(this).parents().eq(1).attr("data-id");
 
-        const selectedBookmark = findBoomark(id);
+        const selectedBookmark = findBookmark(id);
 
         $(".add-bookmark").show();
 
@@ -202,8 +196,6 @@ $(function () {
 
         chrome.storage.sync.set({
             "extensionBackground": selectedBackground
-        }, function () {
-            showNotification("Chrome dashboard", "Background successfully changed.");
         });
     });
 
@@ -215,8 +207,6 @@ $(function () {
 
             chrome.storage.sync.set({
                 "bookmarks": JSON.stringify(bookmarks)
-            }, function () {
-                organizeBookmarks();
             });
         },
         start: function (event, ui) {
@@ -228,15 +218,39 @@ $(function () {
     }).disableSelection();
 });
 
-function findBoomark(id) {
-    for (let i = 0; i < bookmarks.length; i++) {
-        if (bookmarks[i].id == id) {
-            return bookmarks[i];
+chrome.storage.onChanged.addListener(function (changes) {
+    for (key in changes) {
+        let storageChange = changes[key];
+
+        if (key == "userName") {
+            userName = storageChange.newValue;
+
+            setOptionsFormFields();
+        }
+
+        if (key == "weatherLocation") {
+            weatherLocation = storageChange.newValue;
+
+            setOptionsFormFields();
+        }
+
+        if (key == "bookmarks") {
+            bookmarks = JSON.parse(storageChange.newValue);
+
+            organizeBookmarks();
+        }
+
+        if (key == "extensionBackground") {
+            extensionBackground = storageChange.newValue;
+
+            organizeBackgroundImages();
         }
     }
-}
+});
 
 function organizeBackgroundImages() {
+    $("ol").empty();
+
     const images = [
         "dashboard_background.jpg",
         "dashboard_background2.jpg",
@@ -256,7 +270,7 @@ function organizeBackgroundImages() {
 
     $(images).each(function (index, image) {
         if (image == extensionBackground) {
-            template = '<li><a href="#" data-image="' + image + '"><img src="../images/thumbnails/' + image + '" width="184" height="110" alt="" /></a></li>';
+            template = '<li><a href="#" data-image="' + image + '"><img src="../images/thumbnails/' + image + '" width="184" height="110" alt="" /><div><i class="material-icons">check_circle</i>Current background</div></a></li>';
         }
         else {
             template = '<li><a href="#" data-image="' + image + '"><img src="../images/thumbnails/' + image + '" width="184" height="110" alt="" /></a></li>';
@@ -281,14 +295,22 @@ function organizeBookmarks() {
             return parseInt(a.order) - parseInt(b.order);
         });
 
-        let bookmark;
-
-        for (let i = 0; i < orderedBookmarks.length; i++) {
-            bookmark = orderedBookmarks[i];
-
-            $("table tbody").append('<tr data-id="' + bookmark.id + '"><td><a><i class="material-icons">import_export</i></a> ' + bookmark.name + '</td><td class="hide"><a href="' + bookmark.url + '">' + bookmark.url + '</a></td><td class="hide"><button type="button" class="edit">E</button><button type="button" class="delete">X</button></td></tr>');
-        }
+        $.each(orderedBookmarks, function () {
+            $("table tbody").append('<tr data-id="' + this.id + '"><td><a><i class="material-icons">import_export</i></a> ' + this.name + '</td><td class="hide"><a href="' + this.url + '">' + this.url + '</a></td><td class="hide"><button type="button" class="edit">E</button><button type="button" class="delete">X</button></td></tr>');
+        });
     }
+}
+
+function findBookmark(id) {
+    let bookmark = {};
+
+    $.each(bookmarks, function (index) {
+        if (this.id == id) {
+            bookmark = bookmarks[index];
+        }
+    });
+
+    return bookmark;
 }
 
 function setOptionsFormFields() {
@@ -305,9 +327,9 @@ function setOrderPositions() {
 }
 
 function setOrderPosition(id, order) {
-    $.each(bookmarks, function (key, value) {
-        if (value.id == id) {
-            value.order = order;
+    $.each(bookmarks, function () {
+        if (this.id == id) {
+            this.order = order;
         }
     });
 }

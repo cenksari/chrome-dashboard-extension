@@ -25,7 +25,6 @@ header {
 	top: 0;
 	z-index: 3;
 	width: 100%;
-	height: 25px;
 	padding: 12px;
 	position: absolute;
 	box-sizing: border-box;
@@ -183,7 +182,6 @@ footer {
 	padding: 12px;
 	color: #cccccc;
 	font-size: 0.8em;
-	text-align: right;
 	position: absolute;
 	box-sizing: border-box;
 	text-shadow: 1px 1px 1px #000000;
@@ -194,9 +192,11 @@ footer {
 	}
 
 	footer .links {
+		width: 50%;
 		float: left;
 		color: #ffffff;
 		font-size: 1.2em;
+		text-align: left;
 	}
 
 		footer .links a {
@@ -214,8 +214,10 @@ footer {
 		}
 
 	footer .copyright {
+		width: 50%;
 		float: right;
 		padding-top: 10px;
+		text-align: right;
 	}
 
 .icon-0:before {

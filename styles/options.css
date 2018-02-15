@@ -40,9 +40,29 @@ ul, ol {
 		}
 
 	ol li {
+		width: 184px;
+		height: 114px;
 		margin: 5px 8px;
+		overflow: hidden;
 		display: inline-block;
 	}
+
+		ol li div {
+			width: 184px;
+			height: 30px;
+			color: #ffffff;
+			font-size: 0.9em;
+			margin-top: -33px;
+			position: absolute;
+			padding: 3px 0 0 5px;
+			box-sizing: border-box;
+			background-color: rgba(0,0,0,0.5);
+		}
+
+			ol li div i {
+				margin-right: 5px;
+				vertical-align: middle;
+			}
 
 .input, .select, .button {
 	width: 100%;
@@ -111,7 +131,7 @@ label {
 
 table {
 	width: 100%;
-	margin-top: 20px;
+	margin-top: 30px;
 	box-sizing: border-box;
 	border-collapse: collapse;
 }

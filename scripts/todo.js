@@ -57,8 +57,6 @@ $(function () {
                 chrome.storage.sync.set({
                     "todos": JSON.stringify(todos)
                 }, function () {
-                    organizeTodos();
-
                     $("#add").val("");
                 });
             }
@@ -78,16 +76,14 @@ $(function () {
             newStatus = true;
         }
 
-        $.each(todos, function (key, value) {
-            if (value.id == id) {
-                value.completed = newStatus;
+        $.each(todos, function () {
+            if (this.id == id) {
+                this.completed = newStatus;
             }
         });
 
         chrome.storage.sync.set({
             "todos": JSON.stringify(todos)
-        }, function () {
-            organizeTodos();
         });
     });
 
@@ -100,8 +96,6 @@ $(function () {
 
         chrome.storage.sync.set({
             "todos": JSON.stringify(notCompleted)
-        }, function () {
-            organizeTodos();
         });
     });
 });
@@ -133,10 +127,9 @@ function organizeTodos() {
             $(".todo-items").append("<ol class='ongoing'></ol>");
         }
 
-        $.each(notCompleted, function (key, value) {
-            $(".todo-items ol.ongoing").append('<li data-completed="false" data-id="' + value.id + '"><span><em><i class="material-icons">lens</i></em>' + value.item + '</span></li>');
+        $.each(notCompleted, function () {
+            $(".todo-items ol.ongoing").append('<li data-completed="false" data-id="' + this.id + '"><span><em><i class="material-icons">lens</i></em>' + this.item + '</span></li>');
         });
-
 
         const completed = todos.filter(function (todo) {
             return todo.completed == true;
@@ -146,8 +139,8 @@ function organizeTodos() {
             $(".todo-items").append("<h2><a href='#'>Clear completed items</a>Completed items</h2><ol class='completed'></ol>");
         }
 
-        $.each(completed, function (key, value) {
-            $(".todo-items ol.completed").append('<li data-completed="true" data-id="' + value.id + '"><span><em><i class="material-icons">check_circle</i></em>' + value.item + '</span></li>');
+        $.each(completed, function () {
+            $(".todo-items ol.completed").append('<li data-completed="true" data-id="' + this.id + '"><span><em><i class="material-icons">check_circle</i></em>' + this.item + '</span></li>');
         });
     }
 }
