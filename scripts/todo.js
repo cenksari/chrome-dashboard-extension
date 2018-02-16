@@ -38,34 +38,17 @@ $(function () {
 
     $("#add").on("keypress", function (e) {
         if (e.keyCode == 13) {
-            const item = $.trim($("#add").val());
-
-            if (item != "") {
-                if (todos == null) {
-                    todos = [];
-                }
-
-                const todo = {
-                    "id": guid(),
-                    "item": item,
-                    "date": null,
-                    "completed": false
-                };
-
-                todos.push(todo);
-
-                chrome.storage.sync.set({
-                    "todos": JSON.stringify(todos)
-                }, function () {
-                    $("#add").val("");
-                });
-            }
+            addNewTodoItem();
         }
     });
 
-    $(document).on("click", "ol li", function (e) {
-        const id = $(this).attr("data-id");
-        const completed = $(this).attr("data-completed");
+    $("#badd").click(function () {
+        addNewTodoItem();
+    });
+
+    $(document).on("click", ".organize", function (e) {
+        const id = $(this).parents().eq(2).attr("data-id");
+        const completed = $(this).parents().eq(2).attr("data-completed");
 
         let newStatus;
 
@@ -80,6 +63,18 @@ $(function () {
             if (this.id == id) {
                 this.completed = newStatus;
             }
+        });
+
+        chrome.storage.sync.set({
+            "todos": JSON.stringify(todos)
+        });
+    });
+
+    $(document).on("click", ".delete", function (e) {
+        const id = $(this).parents().eq(2).attr("data-id");
+
+        todos = todos.filter(function (todo) {
+            return todo.id != id;
         });
 
         chrome.storage.sync.set({
@@ -112,6 +107,34 @@ chrome.storage.onChanged.addListener(function (changes) {
     }
 });
 
+function addNewTodoItem() {
+    const item = $.trim($("#add").val());
+
+    if (item != "") {
+        if (todos == null) {
+            todos = [];
+        }
+
+        const todo = {
+            "id": guid(),
+            "item": item,
+            "date": null,
+            "completed": false
+        };
+
+        todos.push(todo);
+
+        chrome.storage.sync.set({
+            "todos": JSON.stringify(todos)
+        }, function () {
+            $("#add").val("");
+        });
+    }
+    else {
+        $("#add").focus();
+    }
+}
+
 function organizeTodos() {
     $(".todo-items").empty();
 
@@ -128,7 +151,7 @@ function organizeTodos() {
         }
 
         $.each(notCompleted, function () {
-            $(".todo-items ol.ongoing").append('<li data-completed="false" data-id="' + this.id + '"><span><em><i class="material-icons">lens</i></em>' + this.item + '</span></li>');
+            $(".todo-items ol.ongoing").append('<li data-completed="false" data-id="' + this.id + '"><span><em><i class="material-icons organize">check</i><i class="material-icons delete">clear</i></em>' + this.item + '</span><div class="reminder"><i class="material-icons">alarm</i>no reminder set</div></li>');
         });
 
         const completed = todos.filter(function (todo) {
@@ -136,11 +159,11 @@ function organizeTodos() {
         });
 
         if (completed.length > 0) {
-            $(".todo-items").append("<h2><a href='#'>Clear completed items</a>Completed items</h2><ol class='completed'></ol>");
+            $(".todo-items").append("<h2><a href='#'>Clear completed tasks</a>Completed tasks</h2><ol class='completed'></ol>");
         }
 
         $.each(completed, function () {
-            $(".todo-items ol.completed").append('<li data-completed="true" data-id="' + this.id + '"><span><em><i class="material-icons">check_circle</i></em>' + this.item + '</span></li>');
+            $(".todo-items ol.completed").append('<li data-completed="true" data-id="' + this.id + '"><span><em><i class="material-icons organize">arrow_upward</i><i class="material-icons delete">clear</i></em>' + this.item + '</span></li>');
         });
     }
 }

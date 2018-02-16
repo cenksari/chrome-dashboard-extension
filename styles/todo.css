@@ -1,15 +1,14 @@
 #todo-list {
 	z-index: 5;
 	left: 10px;
-	width: 400px;
+	width: 470px;
 	bottom: 55px;
 	padding: 10px;
 	display: none;
-	min-height: 400px;
 	border-radius: 5px;
 	position: absolute;
 	box-sizing: border-box;
-	background-color: rgba(0,0,0,0.95);
+	background-color: rgba(0,0,0,0.96);
 	box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.5);
 }
 
@@ -18,78 +17,116 @@
 	}
 
 		#todo-list .todo-input input {
-			width: 100%;
-			border: none;
+			width: 370px;
+			height: 40px;
 			padding: 10px;
 			outline: none;
 			color: #ffffff;
 			font-size: 1em;
-			border-radius: 5px;
+			vertical-align: middle;
 			box-sizing: border-box;
 			background-color: #1a1a1a;
+			border: 1px solid #0f0f0f;
+			border-top-left-radius: 5px;
+			border-bottom-left-radius: 5px;
 			font-family: 'Encode Sans', sans-serif;
 		}
 
-	#todo-list .todo-items {
-		max-height: 330px;
+		#todo-list .todo-input button {
+			width: 80px;
+			height: 40px;
+			outline: none;
+			color: #5f5f5f;
+			cursor: pointer;
+			text-align: center;
+			vertical-align: middle;
+			box-sizing: border-box;
+			background-color: #1a1a1a;
+			border: 1px solid #0f0f0f;
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+		}
+
+			#todo-list .todo-input button:hover {
+				color: #ffffff;
+			}
+
+	#todo-list .todo-items h2 {
+		padding: 0;
+		font-size: 1.1em;
+		margin: 5px 8px 10px 8px;
 	}
 
-		#todo-list .todo-items h2 {
-			padding: 0;
-			font-size: 1.1em;
-			margin: 5px 8px 5px 8px;
+		#todo-list .todo-items h2 a {
+			float: right;
+			font-size: 0.8em;
+			font-weight: 400;
 		}
 
-			#todo-list .todo-items h2 a {
-				float: right;
-				font-size: 0.8em;
-				font-weight: 400;
+			#todo-list .todo-items h2 a:hover {
+				color: #f5f5f5;
+				text-decoration: underline;
 			}
 
-				#todo-list .todo-items h2 a:hover {
-					color: #f5f5f5;
-					text-decoration: underline;
-				}
+	#todo-list .todo-items ol {
+		margin: 0;
+		padding: 0;
+		margin-bottom: 15px;
+		list-style-type: none;
+	}
 
-		#todo-list .todo-items ol {
-			margin: 0;
-			padding: 0;
-			margin-bottom: 15px;
-			list-style-type: none;
+		#todo-list .todo-items ol li {
+			padding: 10px;
+			line-height: 160%;
+			border-bottom: 1px solid #333333;
 		}
 
-			#todo-list .todo-items ol li {
-				padding: 10px;
-				cursor: pointer;
-				line-height: 160%;
-				border-bottom: 1px solid #333333;
+			#todo-list .todo-items ol li:hover {
+				background: rgba(50,50,50,0.09);
 			}
 
-				#todo-list .todo-items ol li:hover {
-					background: rgba(50,50,50,0.2);
+			#todo-list .todo-items ol li span {
+				transition: all .3s ease;
+			}
+
+				#todo-list .todo-items ol li span em {
+					float: right;
 				}
 
-				#todo-list .todo-items ol li span {
-					transition: all .3s ease;
-				}
-
-					#todo-list .todo-items ol li span em {
-						float: right;
+					#todo-list .todo-items ol li span em i {
+						cursor: pointer;
 					}
 
-		#todo-list .todo-items .completed li {
-			color: #a5a5a5;
-			text-decoration: line-through;
-		}
+						#todo-list .todo-items ol li span em i:first-child {
+							margin-right: 5px;
+						}
 
-		#todo-list .todo-items .no-items {
-			text-align: center;
-		}
+			#todo-list .todo-items ol li .reminder {
+				cursor: cell;
+				color: #cccccc;
+				margin-top: 5px;
+				font-size: 0.9em;
+			}
+
+				#todo-list .todo-items ol li .reminder i {
+					font-size: 16px;
+					margin-right: 5px;
+					vertical-align: middle;
+				}
+
+	#todo-list .todo-items .completed li {
+		color: #a5a5a5;
+		text-decoration: line-through;
+	}
+
+	#todo-list .todo-items .no-items {
+		text-align: center;
+	}
 
 	#todo-list .scroll {
 		float: left;
-		width: 380px;
-		height: 330px;
+		width: 450px;
+		height: 400px;
 		overflow: auto;
 	}
 
