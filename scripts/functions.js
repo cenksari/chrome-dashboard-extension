@@ -1,3 +1,9 @@
+$(function () {
+    $(this).bind("contextmenu", function (e) {
+        e.preventDefault();
+    });
+});
+
 function showNotification(title, notificationDescription) {
     new Notification(title, {
         icon: '../icons/icon48.png',

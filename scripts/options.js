@@ -15,13 +15,10 @@ $(function () {
         weatherLocation = items.weatherLocation;
         extensionBackground = items.extensionBackground;
 
+        fillFormFields();
         organizeBookmarks();
         setOptionsFormFields();
         organizeBackgroundImages();
-    });
-
-    $(this).bind("contextmenu", function (e) {
-        e.preventDefault();
     });
 
     $(".add-button").click(function (e) {
@@ -30,6 +27,8 @@ $(function () {
         $(".add-bookmark").show();
 
         $("#add").text("Add bookmark");
+
+        $("#bname").focus();
     });
 
     $(".add-bookmark a").click(function (e) {
@@ -89,6 +88,7 @@ $(function () {
                     if (this.id == id) {
                         this.name = name;
                         this.url = url;
+                        return false;
                     }
                 });
             }
@@ -248,6 +248,19 @@ chrome.storage.onChanged.addListener(function (changes) {
     }
 });
 
+function fillFormFields() {
+    const locations = [
+        "Istanbul, TR",
+        "Ankara, TR",
+        "Izmir, TR",
+        "London, UK"
+    ]
+
+    $(locations).each(function (index, location) {
+        $("#ulocation").append('<option value="' + location + '">' + location + '</option>');
+    });
+}
+
 function organizeBackgroundImages() {
     $("ol").empty();
 
@@ -307,6 +320,7 @@ function findBookmark(id) {
     $.each(bookmarks, function (index) {
         if (this.id == id) {
             bookmark = bookmarks[index];
+            return false;
         }
     });
 
@@ -330,6 +344,7 @@ function setOrderPosition(id, order) {
     $.each(bookmarks, function () {
         if (this.id == id) {
             this.order = order;
+            return false;
         }
     });
 }

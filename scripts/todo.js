@@ -62,6 +62,7 @@ $(function () {
         $.each(todos, function () {
             if (this.id == id) {
                 this.completed = newStatus;
+                return false;
             }
         });
 
@@ -147,7 +148,7 @@ function organizeTodos() {
         });
 
         if (notCompleted.length > 0) {
-            $(".todo-items").append("<ol class='ongoing'></ol>");
+            $(".todo-items").append("<h2>My tasks</h2><ol class='ongoing'></ol>");
         }
 
         $.each(notCompleted, function () {

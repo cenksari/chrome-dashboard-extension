@@ -23,10 +23,6 @@ $(function () {
 
     $(".search input").focus();
 
-    $(this).bind("contextmenu", function (e) {
-        e.preventDefault();
-    });
-
     let isMenuOpened = false;
 
     $(document).on("click", ".menu a", function (e) {
