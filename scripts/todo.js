@@ -1,3 +1,12 @@
+/*
+    * Chrome Dashboard Extension
+    * Copyright © 2018 Cenk SARI
+    * Website : http://www.cenksari.com
+    * Github : https://github.com/cenksari
+    *
+    * Contact : cenk@cenksari.com
+    * Licensed under MIT
+*/
 let todos;
 
 $(function () {
@@ -97,8 +106,10 @@ $(function () {
 });
 
 chrome.storage.onChanged.addListener(function (changes) {
-    for (key in changes) {
-        let storageChange = changes[key];
+    let storageChange;
+
+    for (let key in changes) {
+        storageChange = changes[key];
 
         if (key == "todos") {
             todos = JSON.parse(storageChange.newValue);

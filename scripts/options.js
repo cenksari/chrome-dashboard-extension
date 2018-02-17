@@ -1,3 +1,12 @@
+/*
+    * Chrome Dashboard Extension
+    * Copyright © 2018 Cenk SARI
+    * Website : http://www.cenksari.com
+    * Github : https://github.com/cenksari
+    *
+    * Contact : cenk@cenksari.com
+    * Licensed under MIT
+*/
 let userName;
 let bookmarks;
 let weatherLocation;
@@ -81,8 +90,6 @@ $(function () {
                 bookmarks = [];
             }
 
-            setOrderPositions();
-
             if (id != "") {
                 $.each(bookmarks, function () {
                     if (this.id == id) {
@@ -132,6 +139,10 @@ $(function () {
                     action: function () {
                         bookmarks = bookmarks.filter(function (bookmark) {
                             return bookmark.id != id;
+                        });
+
+                        $.each(bookmarks, function (index) {
+                            this.order = index
                         });
 
                         chrome.storage.sync.set({
@@ -203,7 +214,13 @@ $(function () {
         axis: "y",
         placeholder: "sort-ph",
         update: function (event, ui) {
-            setOrderPositions();
+            let id;
+
+            $("tbody tr").each(function (index) {
+                id = $(this).attr("data-id");
+
+                setOrderPosition(id, index);
+            });
 
             chrome.storage.sync.set({
                 "bookmarks": JSON.stringify(bookmarks)
@@ -219,8 +236,10 @@ $(function () {
 });
 
 chrome.storage.onChanged.addListener(function (changes) {
-    for (key in changes) {
-        let storageChange = changes[key];
+    let storageChange;
+
+    for (let key in changes) {
+        storageChange = changes[key];
 
         if (key == "userName") {
             userName = storageChange.newValue;
@@ -256,8 +275,8 @@ function fillFormFields() {
         "London, UK"
     ]
 
-    $(locations).each(function (index, location) {
-        $("#ulocation").append('<option value="' + location + '">' + location + '</option>');
+    $(locations).each(function () {
+        $("#ulocation").append('<option value="' + this + '">' + this + '</option>');
     });
 }
 
@@ -281,12 +300,12 @@ function organizeBackgroundImages() {
 
     let template;
 
-    $(images).each(function (index, image) {
-        if (image == extensionBackground) {
-            template = '<li><a href="#" data-image="' + image + '"><img src="../images/thumbnails/' + image + '" width="184" height="110" alt="" /><div><i class="material-icons">check_circle</i>Current background</div></a></li>';
+    $(images).each(function () {
+        if (this == extensionBackground) {
+            template = '<li><a href="#" data-image="' + this + '"><img src="../images/thumbnails/' + this + '" width="184" height="110" alt="" /><div><i class="material-icons">check_circle</i>Current background</div></a></li>';
         }
         else {
-            template = '<li><a href="#" data-image="' + image + '"><img src="../images/thumbnails/' + image + '" width="184" height="110" alt="" /></a></li>';
+            template = '<li><a href="#" data-image="' + this + '"><img src="../images/thumbnails/' + this + '" width="184" height="110" alt="" /></a></li>';
         }
 
         $("ol").append(template);
@@ -330,14 +349,6 @@ function findBookmark(id) {
 function setOptionsFormFields() {
     $("#uname").val(userName);
     $("#ulocation").val(weatherLocation);
-}
-
-function setOrderPositions() {
-    $("tbody tr").each(function (index) {
-        const id = $(this).attr("data-id");
-
-        setOrderPosition(id, index);
-    });
 }
 
 function setOrderPosition(id, order) {

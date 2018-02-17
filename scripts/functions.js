@@ -1,3 +1,12 @@
+/*
+    * Chrome Dashboard Extension
+    * Copyright © 2018 Cenk SARI
+    * Website : http://www.cenksari.com
+    * Github : https://github.com/cenksari
+    *
+    * Contact : cenk@cenksari.com
+    * Licensed under MIT
+*/
 $(function () {
     $(this).bind("contextmenu", function (e) {
         e.preventDefault();
