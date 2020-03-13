@@ -22,20 +22,23 @@
 					<input class="input" type="text" name="uname" id="uname" placeholder="Please enter your name" autocomplete="off" maxlength="36" />
 				</li>
 				<li>
-					<label>Weather location</label>
-					<select class="select" name="ulocation" id="ulocation"></select>
+					<label>Weather forecast location</label>
+					<input class="input" type="text" name="ulocation" id="ulocation" placeholder="Please enter your location for weather forecast" autocomplete="off" maxlength="32" />
+					<div class="autocompleter"><ul></ul></div>
 				</li>
 				<li>
 					<button class="button" type="submit" name="save" id="save">Save options</button>
 				</li>
 			</ul>
+			<input type="hidden" name="woeid" id="woeid" />
+			<input type="hidden" name="location" id="location" />
 		</form>
 	</section>
 
 	<section>
 		<h1>Bookmarks</h1>
 
-		<a href="#" class="add-button"><i class="material-icons">add</i>Add new bookmark</a>
+		<a href="#" class="add-button">Add new bookmark</a>
 
 		<p>
 			You can add/remove/reorder your bookmarks easily.
@@ -92,7 +95,7 @@
 		</p>
 
 		<p>
-			JQuery 3.3.1 (<a href="https://github.com/jquery/jquery/blob/master/LICENSE.txt">License</a>), JQuery UI 1.12.1 (<a href="https://github.com/jquery/jquery-ui/blob/master/LICENSE.txt">License</a>), SimpleWeather 3.1.0 (<a href="https://github.com/monkeecreate/jquery.simpleWeather/blob/master/MIT-LICENSE.txt">License</a>), JQuery Confirm 3.3.0 (<a href="https://github.com/craftpip/jquery-confirm/blob/master/LICENSE">License</a>), Pexels Free stock photos (<a href="https://www.pexels.com/photo-license/">License</a>)
+			JQuery 3.4.1 (<a href="https://github.com/jquery/jquery/blob/master/LICENSE.txt">License</a>), JQuery UI 1.12.1 (<a href="https://github.com/jquery/jquery-ui/blob/master/LICENSE.txt">License</a>), JQuery Confirm 3.3.4 (<a href="https://github.com/craftpip/jquery-confirm/blob/master/LICENSE">License</a>), Pexels Free stock photos (<a href="https://www.pexels.com/photo-license/">License</a>)
 		</p>
 	</section>
 
@@ -102,6 +105,7 @@
 
 	<script src="../scripts/bundle.js"></script>
 	<script src="../scripts/functions.js"></script>
+	<script src="../scripts/weather.js"></script>
 	<script src="../scripts/options.js"></script>
 </body>
 </html>

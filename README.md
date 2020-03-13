@@ -18,7 +18,7 @@ Installation
 **Option 2** - install it from source:
 
 * clone/download this repo,
-* open Chrome and go to `chrome://chrome/extensions/`,
+* open Chrome and go to `chrome://extensions/`,
 * enable "Developer mode",
 * click "Load unpacked extension",
 * select the `extension` folder in this repo.
