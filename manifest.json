@@ -25,5 +25,5 @@
 	"background",
 	"notifications"
   ],
-  "content_security_policy": "script-src 'self' http://cors-anywhere.herokuapp.com https://www.metaweather.com/api/location*; object-src 'self'"
+  "content_security_policy": "script-src 'self' https://api.allorigins.win/get https://www.metaweather.com/api/location*; object-src 'self'"
 }

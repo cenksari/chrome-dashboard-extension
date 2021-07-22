@@ -20,7 +20,7 @@ getWeatherFromApi = () => {
             ('0' + d.getDate()).slice(-2)
         ].join('/');
 
-        $.getJSON(`http://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/${locationData.woeid}/${date}/`, function () {
+        $.getJSON(`https://api.allorigins.win/get?url=https://www.metaweather.com/api/location/${locationData.woeid}/${date}/`, function () {
         })
             .done(function (data) {
                 $.each(data, function (k, o) {

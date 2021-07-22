@@ -1,6 +1,6 @@
 /*
 	* Chrome Dashboard Extension
-	* Copyright © 2018 Cenk SARI
+	* Copyright ï¿½ 2018 Cenk SARI
 	* Website : http://www.cenksari.com
 	* Github : https://github.com/cenksari
 	* Project : https://github.com/cenksari/chrome-dashboard-extension
@@ -13,12 +13,16 @@
 body {
 	margin: 0;
 	padding: 0;
+	height: 100vh;
 	color: #ffffff;
 	font-size: 1em;
 	background-color: #000000;
+	user-select: none;
 	-webkit-user-select: none;
 	font-family: 'Encode Sans', sans-serif;
 	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
 }
 
 strong {

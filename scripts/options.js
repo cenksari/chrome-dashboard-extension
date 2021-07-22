@@ -147,7 +147,7 @@ $(function () {
 
         let template = '';
 
-        $.getJSON(`http://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/search/?query=${keyword}`, function () {
+        $.getJSON(`https://api.allorigins.win/get?url=https://www.metaweather.com/api/location/search/?query=${keyword}`, function () {
         })
             .done(function (data) {
                 $.each(data, function (k, o) {
