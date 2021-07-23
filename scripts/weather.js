@@ -1,6 +1,6 @@
 /*
     * Chrome Dashboard Extension
-    * Copyright (c) 2018 Cenk SARI
+    * Copyright (c) 2021 Cenk SARI
     * Website : http://www.cenksari.com
     * Github : https://github.com/cenksari
     * Project : https://github.com/cenksari/chrome-dashboard-extension
@@ -23,7 +23,9 @@ getWeatherFromApi = () => {
         $.getJSON(`https://api.allorigins.win/get?url=https://www.metaweather.com/api/location/${locationData.woeid}/${date}/`, function () {
         })
             .done(function (data) {
-                $.each(data, function (k, o) {
+                const contents = JSON.parse(data.contents);
+
+                $.each(contents, function (k, o) {
                     const template = `${locationData.title} - ${o.weather_state_name} - ${Math.round(o.the_temp)}&deg;<img src="https://www.metaweather.com/static/img/weather/${o.weather_state_abbr}.svg" alt="" />`;
 
                     $('#weather').html(template);

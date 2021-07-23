@@ -1,6 +1,6 @@
 /*
     * Chrome Dashboard Extension
-    * Copyright (c) 2018 Cenk SARI
+    * Copyright (c) 2021 Cenk SARI
     * Website : http://www.cenksari.com
     * Github : https://github.com/cenksari
     * Project : https://github.com/cenksari/chrome-dashboard-extension

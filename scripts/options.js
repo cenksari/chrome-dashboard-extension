@@ -1,6 +1,6 @@
 /*
     * Chrome Dashboard Extension
-    * Copyright (c) 2018 Cenk SARI
+    * Copyright (c) 2021 Cenk SARI
     * Website : http://www.cenksari.com
     * Github : https://github.com/cenksari
     * Project : https://github.com/cenksari/chrome-dashboard-extension
@@ -150,7 +150,9 @@ $(function () {
         $.getJSON(`https://api.allorigins.win/get?url=https://www.metaweather.com/api/location/search/?query=${keyword}`, function () {
         })
             .done(function (data) {
-                $.each(data, function (k, o) {
+                const contents = JSON.parse(data.contents);
+
+                $.each(contents, function (k, o) {
                     template += `
                         <li>
                             <a data-woeid="${o.woeid}" href="">${o.title}</a>
@@ -158,7 +160,7 @@ $(function () {
                     `;
                 });
 
-                if (data.length <= 0) {
+                if (contents.length <= 0) {
                     template = "<li><a>No results found for this search keyword.</a></li>";
                 }
             })
