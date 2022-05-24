@@ -2,7 +2,7 @@
   "name": "Chrome Dashboard",
   "short_name": "New Tab page",
   "description": "Shiny new chrome browser new tab screen.",
-  "version": "1.9.6",
+  "version": "1.9.7",
   "manifest_version": 2,
   "author": "Cenk SARI (cenk@cenksari.com)",
   "homepage_url": "http://www.cenksari.com",
@@ -20,9 +20,7 @@
     "open_in_tab": true
   },
   "permissions": [
-    "alarms",
     "storage",
-    "background",
     "notifications"
   ],
   "content_security_policy": "script-src 'self' https://api.allorigins.win/get https://www.metaweather.com/api/location*; object-src 'self'"
